@@ -44,6 +44,19 @@ def main():
         panic("Failed to fetch the latest build version")
         return
 
+    last_patch_version: github.GithubRelease | None = github.get_last_build_version(
+        patch_url
+    )
+    if last_patch_version is None:
+        panic("Failed to fetch the latest patch version")
+        return
+
+    last_integration_version: github.GithubRelease | None = github.get_last_build_version(
+        integration_url
+    )
+    if last_integration_version is None:
+        panic("Failed to fetch the latest integration version")
+
     # Begin stuff
     if count_releases == 0:
         print("First time building Piko Twitter!")
