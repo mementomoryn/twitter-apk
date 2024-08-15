@@ -97,7 +97,10 @@ def main():
 
     build_apks(latest_version)
 
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n**Integrations**: " + last_integration_version.tag_name + "\n**Twitter**: " + latest_version.version
+
     publish_release(
+        release_notes,
         [
             f"twitter-piko-v{latest_version.version}.apk",
         ],
