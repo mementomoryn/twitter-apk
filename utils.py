@@ -90,6 +90,9 @@ def patch_apk(
     excludes: list[str] | None = None,
     out: str | None = None,
 ):
+    keystore_password = os.environ["KEYSTORE_PASSWORD"]
+    keystore_alias = os.environ["KEYSTORE_ALIAS"]
+    
     command = [
         "java",
         "-jar",
@@ -99,17 +102,16 @@ def patch_apk(
         patches,
         "-m",
         integrations,
-        # use j-hc's keystore so we wouldn't need to reinstall
         "--keystore",
         "ks.keystore",
         "--keystore-entry-password",
-        "123456789",
+        keystore_password,
         "--keystore-password",
-        "123456789",
+        keystore_password,
         "--signer",
-        "jhc",
+        "mementomoryn",
         "--keystore-entry-alias",
-        "jhc",
+        keystore_alias,
     ]
 
     if includes is not None:
