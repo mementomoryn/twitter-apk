@@ -72,7 +72,6 @@ def main():
     build_apks(latest_version)
 
     publish_release(
-        latest_version.version,
         [
             f"x-piko-v{latest_version.version}.apk",
             f"x-piko-material-you-v{latest_version.version}.apk",
