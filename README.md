@@ -1,5 +1,5 @@
 # Piko Build
-Automatically generate the latest stable version of Twitter from APKMirror, and patch it with [piko](https://github.com/crimera/piko).
+Automatically generate the latest stable version of Twitter, then patch it with [piko](https://github.com/crimera/piko).
 
 <br>
 
