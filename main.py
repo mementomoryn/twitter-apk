@@ -18,6 +18,8 @@ def main():
     url: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
     repo_url = os.environ["CURRENT_REPOSITORY"]
 
+    print(str(repo_url))
+
     versions = apkmirror.get_versions(url)
 
     latest_version = get_latest_release(versions)
