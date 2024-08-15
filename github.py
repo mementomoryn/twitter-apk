@@ -24,7 +24,6 @@ def count_releases(repo_url: str) -> int | None:
     if response.status_code == 200:
         release = response.json()
 
-        print(str(len(release)))
         if len(release) == 0:
             return 0
     elif response.status_code == 404:
