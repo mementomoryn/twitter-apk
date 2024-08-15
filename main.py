@@ -56,7 +56,7 @@ def main():
         panic("Failed to fetch the latest integration version")
 
     def previous_versions(index: int):
-        return last_build_version.body.splitlines()[index].split(": ")[1]
+        return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
     
     # Begin stuff
     if count_releases == 0:
@@ -98,7 +98,7 @@ def main():
 
     build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n**Integrations**: " + last_integration_version.tag_name + "\n**Twitter**: " + latest_version.version
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version
 
     publish_release(
         release_notes,
