@@ -137,14 +137,14 @@ def patch_apk(
         shutil.move(cli_output, out)
 
 
-def publish_release(files: list[str]):
+def publish_release(notes:str, files: list[str]):
     key = os.environ.get("GH_TOKEN")
     if key is None:
         raise Exception("GH_TOKEN is not set")
 
     release_version = os.environ["RELEASE_VERSION"]
 
-    command = ["gh", "release", "create", "--latest", release_version]
+    command = ["gh", "release", "create", "--latest", "--notes", notes, release_version]
 
     if len(files) == 0:
         raise Exception("Files should have atleast one item")
