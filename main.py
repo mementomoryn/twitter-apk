@@ -37,8 +37,14 @@ def main():
         panic("Failed to fetch the latest build version")
         return
 
+    count_releases: int | None = github.count_releases(
+        repo_url
+    )
+
     # Begin stuff
-    if last_build_version.tag_name != latest_version.version:
+    if count_releases == 0:
+        print("First tim building!")
+    elif last_build_version.tag_name != latest_version.version:
         print(f"New version found: {latest_version.version}")
     else:
         print("No new version found")
