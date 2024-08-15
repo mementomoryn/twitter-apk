@@ -16,7 +16,7 @@ def get_latest_release(versions: list[Version]) -> Version | None:
 def main():
     # get latest version
     url: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
-    repo_url: str = "crimera/twitter-apk"
+    repo_url: str = os.environ["CURRENT_REPOSITORY"]
 
     versions = apkmirror.get_versions(url)
 
