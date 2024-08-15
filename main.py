@@ -43,7 +43,7 @@ def main():
 
     # Begin stuff
     if count_releases == 0:
-        print("First tim building!")
+        print("First time building Piko Twitter!")
     elif last_build_version.tag_name != latest_version.version:
         print(f"New version found: {latest_version.version}")
     else:
