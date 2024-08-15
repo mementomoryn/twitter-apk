@@ -58,7 +58,7 @@ def main():
         panic("Failed to fetch the latest integration version")
 
     def previous_versions(index: int):
-        return last_build_version.body.splitline()[st_index].split(": ")[1]
+        return last_build_version.body.splitlines()[st_index].split(": ")[1]
     
     # Begin stuff
     if count_releases == 0:
