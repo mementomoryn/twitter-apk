@@ -16,7 +16,9 @@ def get_latest_release(versions: list[Version]) -> Version | None:
 def main():
     # get latest version
     url: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
-    repo_url: str = "crimera/twitter-apk"
+    repo_url: str = os.environ["CURRENT_REPOSITORY"]
+
+    print(str(repo_url))
 
     versions = apkmirror.get_versions(url)
 
@@ -33,12 +35,17 @@ def main():
     last_build_version: github.GithubRelease | None = github.get_last_build_version(
         repo_url
     )
-    if last_build_version is None:
+    count_releases: int | None = github.count_releases(
+        repo_url
+    )
+    if last_build_version is None and count_releases is None:
         panic("Failed to fetch the latest build version")
         return
 
     # Begin stuff
-    if last_build_version.tag_name != latest_version.version:
+    if count_releases == 0:
+        print("First time building Piko Twitter!")
+    elif last_build_version.tag_name != latest_version.version:
         print(f"New version found: {latest_version.version}")
     else:
         print("No new version found")

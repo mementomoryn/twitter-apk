@@ -16,11 +16,25 @@ class GithubRelease:
     assets: list[Asset]
 
 
+def count_releases(repo_url: str) -> int | None:
+    url = f"https://api.github.com/repos/{repo_url}/releases"
+    response = requests.get(url, headers=HEADERS)
+
+    print("Get count releases of " + repo_url + ": " + str(response.status_code))
+    if response.status_code == 200:
+        release = response.json()
+
+        if len(release) == 0:
+            return 0
+    elif response.status_code == 404:
+        return
+
+
 def get_last_build_version(repo_url: str) -> GithubRelease | None:
     url = f"https://api.github.com/repos/{repo_url}/releases/latest"
     response = requests.get(url, headers=HEADERS)
 
-    print("release " + repo_url + ": " + str(response.status_code))
+    print("Get latest releases of " + repo_url + ": " + str(response.status_code))
     if response.status_code == 200:
         release = response.json()
 

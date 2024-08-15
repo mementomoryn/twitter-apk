@@ -29,7 +29,8 @@ def report_to_telegram():
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
-    release = get_last_build_version("crimera/twitter-apk")
+    repo_url: str = os.environ["CURRENT_REPOSITORY"]
+    release = get_last_build_version(repo_url)
 
     if release is None:
         raise Exception("Could not fetch release")
