@@ -1,0 +1,20 @@
+name: Clear Workflow
+on:
+  schedule:
+  - cron: '0 */48 * * *'
+  workflow_dispatch:
+jobs:
+  clear_runs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Clear old workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 3
+          keep_minimum_runs: 2
+          check_pullrequest_exist: true
