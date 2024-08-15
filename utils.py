@@ -92,6 +92,7 @@ def patch_apk(
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
+    
     command = [
         "java",
         "-jar",
