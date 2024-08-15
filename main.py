@@ -20,8 +20,6 @@ def main():
     patch_url: str = "crimera/piko"
     integration_url: str = "crimera/revanced-integrations"
 
-    print(str(repo_url))
-
     versions = apkmirror.get_versions(url)
 
     latest_version = get_latest_release(versions)
