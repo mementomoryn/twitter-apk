@@ -47,7 +47,7 @@ def get_last_build_version(repo_url: str) -> GithubRelease | None:
         ]
 
         return GithubRelease(
-            tag_name=release["tag_name"], html_url=release["html_url"], body=release["body"] assets=assets
+            tag_name=release["tag_name"], html_url=release["html_url"], body=release["body"], assets=assets
         )
     elif response.status_code == 404:
         return
