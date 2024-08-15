@@ -35,13 +35,12 @@ def main():
     last_build_version: github.GithubRelease | None = github.get_last_build_version(
         repo_url
     )
-    if last_build_version is None:
-        panic("Failed to fetch the latest build version")
-        return
-
     count_releases: int | None = github.count_releases(
         repo_url
     )
+    if last_build_version is None and count_releases is None:
+        panic("Failed to fetch the latest build version")
+        return
 
     # Begin stuff
     if count_releases == 0:
