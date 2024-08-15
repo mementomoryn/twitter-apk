@@ -20,7 +20,7 @@ def count_releases(repo_url: str) -> int | None:
     url = f"https://api.github.com/repos/{repo_url}/releases"
     response = requests.get(url, headers=HEADERS)
 
-    print("get count releases of " + repo_url + ": " + str(response.status_code))
+    print("Get count releases of " + repo_url + ": " + str(response.status_code))
     if response.status_code == 200:
         release = response.json()
 
@@ -34,7 +34,7 @@ def get_last_build_version(repo_url: str) -> GithubRelease | None:
     url = f"https://api.github.com/repos/{repo_url}/releases/latest"
     response = requests.get(url, headers=HEADERS)
 
-    print("get latest releases of " + repo_url + ": " + str(response.status_code))
+    print("Get latest releases of " + repo_url + ": " + str(response.status_code))
     if response.status_code == 200:
         release = response.json()
 
