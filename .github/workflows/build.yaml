@@ -1,4 +1,4 @@
-name: Release
+name: Build Release
 
 on:
   schedule:
@@ -42,6 +42,7 @@ jobs:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
+        CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
         python main.py
