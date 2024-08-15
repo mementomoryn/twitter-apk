@@ -1,0 +1,16 @@
+name: Upstream Sync
+on: 
+  schedule:
+    - cron: '0 16 * * 3,6'
+  workflow_dispatch:
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Sync Repo
+        run: |
+          gh repo sync ${{ github.repository }} -b master
+        env:
+          GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
