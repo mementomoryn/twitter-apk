@@ -17,6 +17,8 @@ def main():
     # get latest version
     url: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
     repo_url: str = os.environ["CURRENT_REPOSITORY"]
+    patch_url: str = "crimera/piko"
+    integration_url: str = "crimera/revanced-integrations"
 
     print(str(repo_url))
 
