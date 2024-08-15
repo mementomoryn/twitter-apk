@@ -13,6 +13,6 @@ Automatically generate the latest stable version of Twitter from APKMirror, and 
 <br>
 
 ## Credits
-- [Crimera's twitter-apk](https://github.com/crimera/twitter-apk) - The upstream of this repository
-- [Crimera's Piko](https://github.com/crimera/piko) - Patches used to build/modified Twitter APK
-- [@REAndroid's APKEditor](https://github.com/REAndroid/APKEditor) - Tools used to merge bundled split APK
+- [@Crimera twitter-apk](https://github.com/crimera/twitter-apk) - The upstream of this repository
+- [@Crimera Piko](https://github.com/crimera/piko) - Patches used to build/modified Twitter APK
+- [@REAndroid APKEditor](https://github.com/REAndroid/APKEditor) - Tools used to merge bundled split APK
