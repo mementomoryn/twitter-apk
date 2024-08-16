@@ -58,10 +58,10 @@ def main():
     def previous_versions(index: int):
         return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
 
-    print(previous_version(0))
-    print(previous_version(1))
-    print(previous_version(2))
-    print(previous_version(3))
+    print(previous_versions(0))
+    print(previous_versions(1))
+    print(previous_versions(2))
+    print(previous_versions(3))
     return
 
     # Begin stuff
