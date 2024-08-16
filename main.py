@@ -58,7 +58,8 @@ def main():
     def previous_versions(index: int):
         return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
     
-print(previous_versions(2))
+    print(previous_versions(2))
+
     # Begin stuff
     if count_releases == 0:
         print("First time building Piko Twitter!")
