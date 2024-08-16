@@ -58,14 +58,11 @@ def main():
     def previous_versions(index: int):
         body: str = last_build_version.body
         splitline = body.splitlines()
-        rmempty = list(filter(None, splitline))
-        find: str = rmempty[index]
+        remove = list(filter(None, splitline))
+        find: str = remove[index]
         version: str = find.split(": ")[1]
 
         return version
-
-    print(previous_versions(2))
-    return
 
     # Begin stuff
     if count_releases == 0:
