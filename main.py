@@ -99,7 +99,7 @@ def main():
     build_apks(latest_version)
 
     def format_piko_changelogs(changelog: str) -> str:
-        loglist: str = body.split("### ")[1:]
+        loglist: str = changelog.split("### ")[1:]
         append: str = ["### " + log for log in loglist]
         join: str = '\n\n'.join(join)
         
