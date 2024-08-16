@@ -144,7 +144,7 @@ def publish_release(notes:str, files: list[str]):
 
     release_version = os.environ["RELEASE_VERSION"]
 
-    command = ["gh", "release", "create", "--latest", "--notes", notes, release_version]
+    command = ["gh", "release", "create", "--latest", "-n", notes, "-t", release_version, release_version]
 
     if len(files) == 0:
         raise Exception("Files should have atleast one item")
