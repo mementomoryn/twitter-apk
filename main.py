@@ -98,6 +98,13 @@ def main():
 
     build_apks(latest_version)
 
+    def format_piko_changelogs(changelog: str) -> str:
+        loglist: str = body.split("### ")[1:]
+        append: str = ["### " + log for log in loglist]
+        join: str = '\n\n'.join(join)
+        
+        return join
+
     release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version
 
     publish_release(
