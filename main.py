@@ -61,15 +61,19 @@ def main():
     # Begin stuff
     if count_releases == 0:
         print("First time building Piko Twitter!")
-    elif previous_versions(2) != latest_version.version:
-        print(f"New twitter version found: {latest_version.version}")
-    elif previous_versions(0) != last_patch_version.tag_name:
-        print(f"New patch version found: {last_patch_version.tag_name}")
-    elif previous_versions(1) != last_integration_version.tag_name:
-        print(f"New integration version found: {last_integration_version.tag_name}")
     else:
-        print("No new version found")
-        return
+        if previous_versions(2) != latest_version.version:
+            print(f"New twitter version found: {latest_version.version}")
+            build: int = 1
+        if previous_versions(0) != last_patch_version.tag_name:
+            print(f"New patch version found: {last_patch_version.tag_name}")
+            build: int = 1
+        if previous_versions(1) != last_integration_version.tag_name:
+            print(f"New integration version found: {last_integration_version.tag_name}")
+            build: int = 1
+        if build is not 1:
+            print("No new version found")
+            return
 
     # get bundle and universal variant
     variants: list[Variant] = apkmirror.get_variants(latest_version)
