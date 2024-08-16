@@ -58,8 +58,8 @@ def main():
     def previous_versions(index: int):
         body: str = last_build_version.body
         splitline = body.splitlines()
-        filter = list(filter(None, splitline))
-        find: str = filter[index]
+        rmempty = list(filter(None, splitline))
+        find: str = rmempty[index]
         version: str = find.split(": ")[1]
 
         return version
