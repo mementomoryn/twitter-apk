@@ -105,7 +105,7 @@ def main():
         
         return join
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches Release Notes" + format_piko_changelogs(last_patch_version.body) + "\nIntegrations Release Notes" + format_piko_changelogs(last_integration_version.body)
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_piko_changelogs(last_patch_version.body) + "\n## Integrations\n" + format_piko_changelogs(last_integration_version.body)
 
     publish_release(
         release_notes,
