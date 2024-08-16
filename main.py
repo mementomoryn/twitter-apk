@@ -56,9 +56,15 @@ def main():
         panic("Failed to fetch the latest integration version")
 
     def previous_versions(index: int):
-        return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
+        body: str = last_build_version.body
+        splitline = body.splitlines()
+        filter = list(filter(None, splitline))
+        find: str = filter[index]
+        version: str = find.split(": ")[1]
 
-    print(last_build_version.body.splitlines())
+        return version
+
+    print(previous_versions(2))
     return
 
     # Begin stuff
