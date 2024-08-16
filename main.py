@@ -58,8 +58,7 @@ def main():
     def previous_versions(index: int):
         return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
 
-    print(previous_versions(0))
-    print(last_build_version.body.replace("\n\n", "\n").splitlines()[1].split(": ")[1])
+    print(last_build_version.body.replace("\n\n", "\n").splitlines())
     print(previous_versions(2))
     print(previous_versions(3))
     return
