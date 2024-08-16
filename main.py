@@ -101,7 +101,7 @@ def main():
     def format_piko_changelogs(changelog: str) -> str:
         loglist: str = changelog.split("### ")[1:]
         append: str = ["### " + log for log in loglist]
-        join: str = '\n\n'.join(join)
+        join: str = '\n\n'.join(append)
         
         return join
 
