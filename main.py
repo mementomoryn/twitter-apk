@@ -57,8 +57,12 @@ def main():
 
     def previous_versions(index: int):
         return last_build_version.body.replace("\n\n", "\n").splitlines()[index].split(": ")[1]
-    
-    print(previous_versions(2))
+
+    print(previous_version(0))
+    print(previous_version(1))
+    print(previous_version(2))
+    print(previous_version(3))
+    return
 
     # Begin stuff
     if count_releases == 0:
@@ -103,7 +107,7 @@ def main():
     def format_piko_changelogs(changelog: str) -> str:
         loglist: str = changelog.split("### ")[1:]
         append: str = ["### " + log for log in loglist]
-        join: str = '\n\n'.join(append)
+        join: str = ''.join(append)
         
         return join
 
