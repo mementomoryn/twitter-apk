@@ -25,7 +25,7 @@ def send_message(message: str, token: str, chat_id: str, thread_id: str):
     requests.post(endpoint, data=data)
 
 
-def get_previous_versions(index: int) -> str:
+def previous_versions(index: int) -> str:
     body: str = last_build_version.body
     splitline = body.splitlines()
     remove = list(filter(None, splitline))
@@ -35,7 +35,7 @@ def get_previous_versions(index: int) -> str:
     return version
 
 
-def format_piko_changelogs(changelog: str) -> str:
+def format_changelogs(changelog: str) -> str:
     loglist: str = changelog.split("### ")[1:]
     append: str = ["### " + log for log in loglist]
     join: str = ''.join(append)
