@@ -94,7 +94,11 @@ def main():
     else:
         print("apkm is already merged")
 
-    download_revanced_bins()
+    download_revanced_bins(cli_url, "cli")
+
+    download_revanced_bins(patch_url, "patches")
+
+    download_revanced_bins(integration_url, "integrations")
 
     build_apks(latest_version)
 
