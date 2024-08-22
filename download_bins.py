@@ -1,6 +1,6 @@
 import requests
 import re
-from utils import download
+from utils import panic, download
 
 def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
     url = f"https://api.github.com/repos/{repo}/releases/latest"
@@ -27,15 +27,23 @@ def download_apkeditor():
     download_release_asset("REAndroid/APKEditor", "APKEditor", "bins", "apkeditor.jar")
 
 
-def download_revanced_bins():
-    print("Downloading cli")
-    download_release_asset("inotia00/revanced-cli", "^.*-cli-.*\.jar$", "bins", "cli.jar")
-    
-    print("Downloading patches")
-    download_release_asset("crimera/piko", "^.*-patches-.*\.jar$", "bins", "patches.jar")
+def download_revanced_bins(repo_url: str, type: str):
+    if type == "cli":
+        print("Downloading cli")
+        regex = "^.*-cli-.*\.jar$"
+        output = "cli.jar"
+    elif type == "patches":
+        print("Downloading patches")
+        regex = "^.*-patches-.*\.jar$"
+        output = "patches.jar"
+    elif type == "integrations":
+        print("Downloading integrations")
+        regex = "^.*-integrations-.*\.apk$"
+        output = "integrations.apk"
+    else:
+        panic("Types is not recognized")
 
-    print("Downloading integrations")
-    download_release_asset("crimera/revanced-integrations","^.*-integrations-.*\.apk$","bins","integrations.apk")
+    download_release_asset(repo_url, regex, "bins", output)
 
 
 # if __name__ == "__main__":
