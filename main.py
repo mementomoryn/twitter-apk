@@ -19,6 +19,7 @@ def main():
     repo_url: str = os.environ["CURRENT_REPOSITORY"]
     patch_url: str = "crimera/piko"
     integration_url: str = "crimera/revanced-integrations"
+    cli_url: str = "inotia00/revanced-cli"
 
     versions = apkmirror.get_versions(url)
 
