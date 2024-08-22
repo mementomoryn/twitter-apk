@@ -29,13 +29,13 @@ def download_apkeditor():
 
 def download_revanced_bins():
     print("Downloading cli")
-    download_release_asset("inotia00/revanced-cli", "^.*cli.*jar$", "bins", "cli.jar")
+    download_release_asset("inotia00/revanced-cli", "^.*-cli-.*\.jar$", "bins", "cli.jar")
     
     print("Downloading patches")
-    download_release_asset("crimera/piko", "^.*patches.*jar$", "bins", "patches.jar")
+    download_release_asset("crimera/piko", "^.*-patches-.*\.jar$", "bins", "patches.jar")
 
     print("Downloading integrations")
-    download_release_asset("crimera/revanced-integrations","^.*integrations.*apk$","bins","integrations.apk")
+    download_release_asset("crimera/revanced-integrations","^.*-integrations-.*\.apk$","bins","integrations.apk")
 
 
 if __name__ == "__main__":
