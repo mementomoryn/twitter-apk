@@ -25,8 +25,8 @@ def send_message(message: str, token: str, chat_id: str, thread_id: str):
     requests.post(endpoint, data=data)
 
 
-def previous_version(index: int) -> str:
-    body: str = last_build_version.body
+def previous_version(index: int, changelog: str) -> str:
+    body: str = changelog.body
     splitline = body.splitlines()
     remove = list(filter(None, splitline))
     find: str = remove[index]
