@@ -26,7 +26,7 @@ def main():
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    # only continue if it's a release
+    # only continue if latest_version is a stable release
     if latest_version.version.find("release") < 0:
         panic("Latest version is not a release version")
 
@@ -57,16 +57,7 @@ def main():
     if last_integration_version is None:
         panic("Failed to fetch the latest integration version")
 
-    def previous_versions(index: int):
-        body: str = last_build_version.body
-        splitline = body.splitlines()
-        remove = list(filter(None, splitline))
-        find: str = remove[index]
-        version: str = find.split(": ")[1]
-
-        return version
-
-    # Begin stuff
+    # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
     elif previous_versions(2) != latest_version.version:
@@ -105,13 +96,6 @@ def main():
     download_revanced_bins()
 
     build_apks(latest_version)
-
-    def format_piko_changelogs(changelog: str) -> str:
-        loglist: str = changelog.split("### ")[1:]
-        append: str = ["### " + log for log in loglist]
-        join: str = ''.join(append)
-        
-        return join
 
     release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_piko_changelogs(last_patch_version.body) + "\n## Integrations\n" + format_piko_changelogs(last_integration_version.body)
 
