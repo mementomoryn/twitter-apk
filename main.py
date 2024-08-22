@@ -2,7 +2,7 @@ from apkmirror import Version, Variant
 from build_variants import build_apks
 from download_bins import download_apkeditor, download_revanced_bins
 import github
-from utils import panic, merge_apk, publish_release, report_to_telegram
+from utils import panic, merge_apk, publish_release, report_to_telegram, previous_version, format_changelog
 import apkmirror
 import os
 
@@ -60,11 +60,11 @@ def main():
     # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
-    elif previous_versions(2) != latest_version.version:
+    elif previous_version(2) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
-    elif previous_versions(0) != last_patch_version.tag_name:
+    elif previous_version(0) != last_patch_version.tag_name:
         print(f"New patch version found: {last_patch_version.tag_name}")
-    elif previous_versions(1) != last_integration_version.tag_name:
+    elif previous_version(1) != last_integration_version.tag_name:
         print(f"New integration version found: {last_integration_version.tag_name}")
     else:
         print("No new version found")
@@ -97,7 +97,7 @@ def main():
 
     build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_piko_changelogs(last_patch_version.body) + "\n## Integrations\n" + format_piko_changelogs(last_integration_version.body)
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body) + "\n## Integrations\n" + format_changelog(last_integration_version.body)
 
     publish_release(
         release_notes,
