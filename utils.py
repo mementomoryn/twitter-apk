@@ -60,6 +60,9 @@ def report_to_telegram():
     message = f"""
 [New Update Released !]({release.html_url})
 
+Patches -> {previous_version(0, release)}
+Integrations -> {previous_version(1, release)}
+
 ▼ Downloads ▼
 
 {"\n\n".join(downloads)}
