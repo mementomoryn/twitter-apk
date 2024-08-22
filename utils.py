@@ -25,6 +25,24 @@ def send_message(message: str, token: str, chat_id: str, thread_id: str):
     requests.post(endpoint, data=data)
 
 
+def get_previous_versions(index: int) -> str:
+    body: str = last_build_version.body
+    splitline = body.splitlines()
+    remove = list(filter(None, splitline))
+    find: str = remove[index]
+    version: str = find.split(": ")[1]
+
+    return version
+
+
+def format_piko_changelogs(changelog: str) -> str:
+    loglist: str = changelog.split("### ")[1:]
+    append: str = ["### " + log for log in loglist]
+    join: str = ''.join(append)
+
+    return join
+
+
 def report_to_telegram():
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
