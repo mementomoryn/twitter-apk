@@ -106,7 +106,7 @@ def main():
         ],
     )
 
-    report_to_telegram()
+    report_to_telegram(patch_url, integration_url)
 
 
 if __name__ == "__main__":
