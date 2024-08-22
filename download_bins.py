@@ -38,6 +38,6 @@ def download_revanced_bins():
     download_release_asset("crimera/revanced-integrations","^.*-integrations-.*\.apk$","bins","integrations.apk")
 
 
-if __name__ == "__main__":
-    download_apkeditor()
-    download_revanced_bins()
+# if __name__ == "__main__":
+#    download_apkeditor()
+#    download_revanced_bins()
