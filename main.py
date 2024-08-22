@@ -60,11 +60,11 @@ def main():
     # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
-    elif previous_version(2) != latest_version.version:
+    elif previous_version(2, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
-    elif previous_version(0) != last_patch_version.tag_name:
+    elif previous_version(0, last_build_version) != last_patch_version.tag_name:
         print(f"New patch version found: {last_patch_version.tag_name}")
-    elif previous_version(1) != last_integration_version.tag_name:
+    elif previous_version(1, last_build_version) != last_integration_version.tag_name:
         print(f"New integration version found: {last_integration_version.tag_name}")
     else:
         print("No new version found")
