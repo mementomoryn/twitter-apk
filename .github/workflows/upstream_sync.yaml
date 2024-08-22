@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@main
       - name: Sync Repo
         run: |
-          gh repo sync ${{ github.repository }} -b master
+          gh repo sync ${{ github.repository }} -b upstream -s crimera/twitter-apk
         env:
           GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
