@@ -11,7 +11,7 @@ def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
     
     release = response.json()
 
-    assets = get_last_release_assets(repo)
+    assets = response.json()["assets"]
 
     link = None
     for i in assets:
@@ -34,3 +34,14 @@ def download_apkeditor():
 def download_revanced_bins():
     print("Downloading cli")
     download_release_asset("inotia00/revanced-cli", "^revanced-cli.*jar$", "bins", "cli.jar")
+    
+    print("Downloading patches")
+    download_release_asset("crimera/piko", "^piko.*jar$", "bins", "patches.jar")
+
+    print("Downloading integrations")
+    download_release_asset("crimera/revanced-integrations","^rev.*apk$","bins","integrations.apk")
+
+
+if __name__ == "__main__":
+    download_apkeditor()
+    download_revanced_bins()
