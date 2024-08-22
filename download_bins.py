@@ -8,8 +8,6 @@ def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception("Failed to fetch github")
-    
-    release = response.json()
 
     assets = response.json()["assets"]
 
@@ -22,8 +20,6 @@ def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
             break
 
     download(link, f"{out_dir.lstrip("/")}/{filename}")
-
-    return release
 
 
 def download_apkeditor():
