@@ -41,7 +41,7 @@ def download_revanced_bins(repo_url: str, type: str):
         regex = "^.*-integrations-.*\.apk$"
         output = "integrations.apk"
     else:
-        panic("Types is not recognized")
+        panic("Assets bin type is not recognized")
 
     download_release_asset(repo_url, regex, "bins", output)
 
