@@ -43,7 +43,7 @@ def format_changelog(changelog: str) -> str:
     return join
 
 
-def report_to_telegram():
+def report_to_telegram(patch_url: str, integration_url: str):
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
@@ -60,8 +60,8 @@ def report_to_telegram():
     message = f"""
 [New Update Released !]({release.html_url})
 
-Patches -> {previous_version(0, release)}
-Integrations -> {previous_version(1, release)}
+Patches -> {patch_url}@{previous_version(0, release)}
+Integrations -> {integration_url}@{previous_version(1, release)}
 
 ▼ Downloads ▼
 
