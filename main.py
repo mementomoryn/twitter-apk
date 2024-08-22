@@ -26,8 +26,6 @@ def main():
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    latest_version = latest_version
-
     # only continue if it's a release
     if latest_version.version.find("release") < 0:
         panic("Latest version is not a release version")
@@ -35,9 +33,11 @@ def main():
     last_build_version: github.GithubRelease | None = github.get_last_build_version(
         repo_url
     )
+
     count_releases: int | None = github.count_releases(
         repo_url
     )
+
     if last_build_version is None and count_releases is None:
         panic("Failed to fetch the latest build version")
         return
@@ -45,6 +45,7 @@ def main():
     last_patch_version: github.GithubRelease | None = github.get_last_build_version(
         patch_url
     )
+
     if last_patch_version is None:
         panic("Failed to fetch the latest patch version")
         return
@@ -52,6 +53,7 @@ def main():
     last_integration_version: github.GithubRelease | None = github.get_last_build_version(
         integration_url
     )
+
     if last_integration_version is None:
         panic("Failed to fetch the latest integration version")
 
