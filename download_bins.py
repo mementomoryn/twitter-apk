@@ -46,6 +46,8 @@ def download_revanced_bins(repo_url: str, type: str):
     download_release_asset(repo_url, regex, "bins", output)
 
 
-# if __name__ == "__main__":
-#    download_apkeditor()
-#    download_revanced_bins()
+if __name__ == "__main__":
+   download_apkeditor()
+   download_revanced_bins(cli_url, "cli")
+   download_revanced_bins(patch_url, "patches")
+   download_revanced_bins(integration_url, "integrations")
