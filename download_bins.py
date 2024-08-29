@@ -30,15 +30,15 @@ def download_apkeditor():
 def download_revanced_bins(repo_url: str, type: str):
     if type == "cli":
         print("Downloading cli")
-        regex = "^.*-cli-.*\.jar$"
+        regex = "^.*-cli-.*.jar$"
         output = "cli.jar"
     elif type == "patches":
         print("Downloading patches")
-        regex = "^.*-patches-.*\.jar$"
+        regex = "^.*-patches-.*.jar$"
         output = "patches.jar"
     elif type == "integrations":
         print("Downloading integrations")
-        regex = "^.*-integrations-.*\.apk$"
+        regex = "^.*-integrations-.*.apk$"
         output = "integrations.apk"
     else:
         panic("Assets bin type is not recognized")
