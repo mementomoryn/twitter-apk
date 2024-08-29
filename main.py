@@ -96,9 +96,9 @@ def main():
 
     download_revanced_bins(cli_url, "cli")
 
-    download_revanced_bins(patch_url, "patches")
+    download_revanced_bins(patch_url, "patch")
 
-    download_revanced_bins(integration_url, "integrations")
+    download_revanced_bins(integration_url, "integration")
 
     build_apks(latest_version)
 
