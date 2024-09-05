@@ -134,6 +134,10 @@ def patch_apk(
         "mementomoryn",
         "--keystore-entry-alias",
         keystore_alias,
+        "--rip-lib",
+        "x86_64",
+        "--rip-lib",
+        "x86"
     ]
 
     if includes is not None:
