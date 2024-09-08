@@ -71,6 +71,8 @@ def main():
     # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
+    elif args.version != None:
+        print("Manual app version building!")
     elif previous_version(2, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
     elif previous_version(0, last_build_version) != last_patch_version.tag_name:
