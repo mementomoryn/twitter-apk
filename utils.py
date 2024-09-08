@@ -133,12 +133,13 @@ def patch_apk(
         "--signer",
         "mementomoryn",
         "--keystore-entry-alias",
-        keystore_alias,
-        "--rip-lib",
-        "x86_64",
-        "--rip-lib",
-        "x86"
+        keystore_alias
     ]
+
+    if riparch is not None:
+        for r in riparch:
+            command.append("--riplib")
+            command.append(r)
 
     if includes is not None:
         for i in includes:
