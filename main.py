@@ -5,6 +5,7 @@ import github
 from utils import panic, merge_apk, publish_release, report_to_telegram, previous_version, format_changelog
 import apkmirror
 import os
+import argparse
 
 
 def get_latest_release(versions: list[Version]) -> Version | None:
@@ -21,9 +22,18 @@ def main():
     integration_url: str = "crimera/revanced-integrations"
     cli_url: str = "inotia00/revanced-cli"
 
-    versions = apkmirror.get_versions(url)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--version", action="store", dest="version")
+    args = parser.parse_args()
 
-    latest_version = get_latest_release(versions)
+    if args.version is None:
+        versions = apkmirror.get_versions(url)
+        latest_version = get_latest_release(versions)
+    else:
+        url_split = list(filter(None, url.split("/")))
+        link = f"{url}{url_split[len(url_split)-1]}-{args.version.replace(".","-")}-release"
+        latest_version = Version(link=link, version=args.version)
+    
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
@@ -61,6 +71,8 @@ def main():
     # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
+    elif args.version != None:
+        print("Manual app version building!")
     elif previous_version(2, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
     elif previous_version(0, last_build_version) != last_patch_version.tag_name:

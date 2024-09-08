@@ -4,15 +4,18 @@ on:
   schedule:
     - cron: "0 20 * * *"
   workflow_dispatch:
+      inputs:
+        manual_version:
+          description: "Enter version code of app to build (leave it empty to choose latest)"
+          required: false
+          type: string
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up java
@@ -45,4 +48,8 @@ jobs:
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
-        python main.py
+        if [ "${{ inputs.manual_version }}" ]; then
+          python main.py --version ${{ inputs.manual_version }}
+        else
+          python main.py
+        fi
