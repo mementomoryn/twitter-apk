@@ -16,8 +16,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      manual_version: ${{ github.event.inputs.manual_version }}
     steps:
     - uses: actions/checkout@v4
     - name: Set up java
@@ -50,8 +48,8 @@ jobs:
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
-        if [ ${{ env.manual_version }} != '' ]; then
-          python main.py --version ${{ env.manual_version }}
+        if [ "${{ inputs.manual_version }}" ]; then
+          python main.py --version ${{ inputs.manual_version }}
         else
           phyton main.py
         fi
