@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 20 * * *"
   workflow_dispatch:
+      inputs:
+        manual_version:
+          description: "Enter version code of app to build (leave it empty to choose latest)"
+          required: false
+          type: string
 
 permissions:
   contents: read
@@ -45,4 +50,9 @@ jobs:
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
-        python main.py
+        if [ ${{ github.event.inputs.manual_version }} != '' ]; then
+          python main.py --version ${{ github.event.inputs.manual_version }}
+        else
+          phyton main.py
+        fi
+          
