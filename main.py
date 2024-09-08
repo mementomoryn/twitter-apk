@@ -31,8 +31,8 @@ def main():
         latest_version = get_latest_release(versions)
     else:
         url_split = list(filter(None, url.split("/")))
-        link = f"{url}{url_split[len(url_split)-1]}-{version.replace(".","-")}-release"
-        latest_version = Version(link=link, version=version)
+        link = f"{url}{url_split[len(url_split)-1]}-{args.version.replace(".","-")}-release"
+        latest_version = Version(link=link, version=args.version)
     
     if latest_version is None:
         raise Exception("Could not find the latest version")
