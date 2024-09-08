@@ -49,7 +49,7 @@ jobs:
       run: |
         mkdir -p bins
         if [ "${{ inputs.manual_version }}" ]; then
-          python main.py --version ${{ inputs.manual_version }}
+          python main.py --version "${{ inputs.manual_version }}"
         else
           phyton main.py
         fi
