@@ -32,12 +32,17 @@ def main():
     else:
         url_split = list(filter(None, url.split("/")))
         link = f"{url}{url_split[len(url_split)-1]}-{args.version.replace(".","-")}-release"
+
+        response = requests.get(link, headers=HEADERS)
+        if response.status_code == 404:
+            panic("Could not find the selected app version")
+
         latest_version = Version(link=link, version=args.version)
     
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    # only continue if latest_version is a stable release
+    # only continue if latest_version is a release
     if latest_version.version.find("release") < 0:
         panic("Latest version is not a release version")
 
