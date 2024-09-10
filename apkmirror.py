@@ -68,7 +68,7 @@ def get_versions(url: str) -> list[Version]:
 
     return out
 
-def get_manual_version(url: str, version: str) -> str:
+def get_manual_version(url: str, version: str) -> str | None:
     """
     Get the version of the app from the given apkmirror url and manual selected version
     """
@@ -78,7 +78,8 @@ def get_manual_version(url: str, version: str) -> str:
 
     response = requests.get(link, headers=HEADERS)
     if response.status_code != 200:
-        raise FailedToFetch(f"{url}:{response.status_code}")
+        raise Exception("Could not find the selected version")
+        return None
 
     out = Version(version=version, link=link)
 
