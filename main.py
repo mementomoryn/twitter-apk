@@ -30,14 +30,7 @@ def main():
         versions = apkmirror.get_versions(url)
         latest_version = get_latest_release(versions)
     else:
-        url_split = list(filter(None, url.split("/")))
-        link = f"{url}{url_split[len(url_split)-1]}-{args.version.replace(".","-")}-release"
-
-        response = requests.get(link, headers=HEADERS)
-        if response.status_code == 404:
-            panic("Could not find the selected app version")
-
-        latest_version = Version(link=link, version=args.version)
+        latest_version = apkmirror.get_manual_version(url, args.version)
     
     if latest_version is None:
         raise Exception("Could not find the latest version")
