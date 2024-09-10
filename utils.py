@@ -110,6 +110,7 @@ def patch_apk(
     apk: str,
     includes: list[str] | None = None,
     excludes: list[str] | None = None,
+    riparch: list[str] | None = None,
     out: str | None = None,
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
