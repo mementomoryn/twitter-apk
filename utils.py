@@ -139,7 +139,7 @@ def patch_apk(
 
     if riparch is not None:
         for r in riparch:
-            command.append("--riplib")
+            command.append("--rip-lib")
             command.append(r)
 
     if includes is not None:
