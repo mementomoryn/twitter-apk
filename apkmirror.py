@@ -73,8 +73,8 @@ def get_manual_version(url: str, version: str) -> str:
     Get the version of the app from the given apkmirror url and manual selected version
     """
     response = requests.get(link, headers=HEADERS)
-    if response.status_code == 404:
-        panic("Could not find the selected app version")
+    if response.status_code != 200:
+        raise FailedToFetch(f"{url}:{response.status_code}")
 
     split_url = list(filter(None, url.split("/")))
     app_name = split_url[split_url-1]
