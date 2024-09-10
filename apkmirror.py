@@ -68,6 +68,21 @@ def get_versions(url: str) -> list[Version]:
 
     return out
 
+def get_manual_version(url: str, version: str) -> str:
+    """
+    Get the version of the app from the given apkmirror url and manual selected version
+    """
+    response = requests.get(link, headers=HEADERS)
+    if response.status_code == 404:
+        panic("Could not find the selected app version")
+
+    split_url = list(filter(None, url.split("/")))
+    app_name = split_url[split_url-1]
+    link = f"{url}{app_name}-{version.replace(".","-")}-release"
+
+    out = Version(version=version, link=link)
+
+    return out
 
 def download_apk(variant: Variant):
     """Download apk from the variant link"""
