@@ -72,8 +72,7 @@ def get_manual_version(url: str, version: str) -> str | None:
     """
     Get the version of the app from the given apkmirror url and manual selected version
     """
-    split_url = list(filter(None, url.split("/")))
-    app_name = split_url[len(split_url)-1]
+    app_name = list(filter(None, url.split("/")))[-1]
     link = f"{url}{app_name}-{version.replace(".","-")}-release"
 
     response = requests.get(link, headers=HEADERS)
