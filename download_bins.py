@@ -31,15 +31,15 @@ def download_revanced_bins(repo_url: str, type: str):
     match type:
         case "cli":
             print("Downloading cli")
-            regex = "^.*-cli-.*.jar$"
+            regex = r"^.*-cli-.*\.jar$"
             output = "cli.jar"
         case "patch":
             print("Downloading patches")
-            regex = "^.*-patches-.*.jar$"
+            regex = r"^.*-patches-.*\.jar$"
             output = "patches.jar"
         case "integration":
             print("Downloading integrations")
-            regex = "^.*-integrations-.*.apk$"
+            regex = r"^.*-integrations-.*\.apk$"
             output = "integrations.apk"
         case _:
             panic("Assets bin type is not recognized")
