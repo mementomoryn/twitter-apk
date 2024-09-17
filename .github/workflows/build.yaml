@@ -72,7 +72,7 @@ jobs:
         if [[ ${{ env.RELEASE_VERSION }} == *-pre* ]]; then
           echo "PRERELEASE_VERSION=${{ env.RELEASE_VERSION }}" >> $GITHUB_ENV
         else
-          echo "PRERELEASE_VERSION=${{ env.RELEASE_VERSION }}-pre.$(git rev-parse --short HEAD | sed 's/0*//')" >> GITHUB_ENV
+          echo "PRERELEASE_VERSION=${{ env.RELEASE_VERSION }}-pre.$(git rev-parse --short HEAD | sed 's/0*//')" >> $GITHUB_ENV
         fi
 
         if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
