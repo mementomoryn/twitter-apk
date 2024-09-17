@@ -75,7 +75,7 @@ jobs:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
-        PRERELEASE_VERSION ${{ steps.pre-release.outputs.version }}
+        PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
