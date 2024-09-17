@@ -61,10 +61,10 @@ jobs:
       run: |
         release_version=${{ steps.release_version.outputs.v-version }}
         git_sha_short=$(git rev-parse --short HEAD | sed 's/0*//')
-        if [[ $release_version == *-pre* ]]; then
-          echo "version=$release_version" >> $GITHUB_OUTPUT
-        else
+        if [[ $release_version != *-pre* ]]; then
           echo "version=$release_version-pre.$git_sha_short" >> $GITHUB_OUTPUT
+        else
+          echo "version=$release_version" >> $GITHUB_OUTPUT
         fi
     - name: Try building
       env: 
