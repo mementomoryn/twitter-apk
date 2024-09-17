@@ -132,6 +132,7 @@ def main():
 
     publish_release(
         release_notes,
+        prerelease_build,
         [
             f"twitter-piko-v{latest_version.version}.apk",
         ]
