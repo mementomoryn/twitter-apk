@@ -8,10 +8,13 @@ import os
 import argparse
 
 
-def get_latest_release(versions: list[Version]) -> Version | None:
-    for i in versions:
-        if i.version.find("release") >= 0:
-            return i
+def get_latest_release(versions: list[Version], prerelease: bool) -> Version | None:
+    if prerelease is True:
+        return versions[0]
+    else:
+        for i in versions:
+            i.version.lower().find("beta") != -1 or i.version.lower().find("alpha") != -1:
+                return i
 
 
 def main():
@@ -28,24 +31,26 @@ def main():
     args = parser.parse_args()
 
     if len(args.prerelease) != 4:
-        panic("Unrecognized prerelease arguments list")
+        panic("prerelease arguments list is too short")
     else:
+        if "false" in args.prerelease:
+            prerelease_build: bool = True
+
         prerelease_cli: bool = bool(args.prerelease[0])
-        prerelease_patches: bool = bool(args.prerelease[1])
-        prerelease_integrations: bool = bool(args.prerelease[2])
+        prerelease_patch: bool = bool(args.prerelease[1])
+        prerelease_int: bool = bool(args.prerelease[2])
         prerelease_apk: bool = bool(args.prerelease[3])
 
     if args.version is None:
         versions = apkmirror.get_versions(url)
-        latest_version = get_latest_release(versions)
+        latest_version = get_latest_release(versions, prerelease_apk)
     else:
         latest_version = apkmirror.get_manual_version(url, args.version)
     
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    # only continue if latest_version is a release
-    if latest_version.version.find("release") < 0:
+    if latest_version.version.lower().find("beta") != -1 or latest_version.version.lower().find("alpha") != -1 and prerelease_apk is False:
         panic("Latest version is not a release version")
 
     last_build_version: github.GithubRelease | None = github.get_last_build_version(
@@ -80,6 +85,8 @@ def main():
         print("First time building Piko Twitter!")
     elif args.version != None:
         print("Manual app version building!")
+    elif prerelease_build is True:
+        print("Pre-releases version building!")
     elif previous_version(2, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
     elif previous_version(0, last_build_version) != last_patch_version.tag_name:
@@ -113,11 +120,11 @@ def main():
     else:
         print("apkm is already merged")
 
-    download_revanced_bins(cli_url, "cli")
+    download_revanced_bins(cli_url, "cli", prerelease_cli)
 
-    download_revanced_bins(patch_url, "patch")
+    download_revanced_bins(patch_url, "patch", prerelease_patch)
 
-    download_revanced_bins(integration_url, "integration")
+    download_revanced_bins(integration_url, "integration", prerelease_int)
 
     build_apks(latest_version)
 
@@ -127,7 +134,7 @@ def main():
         release_notes,
         [
             f"twitter-piko-v{latest_version.version}.apk",
-        ],
+        ]
     )
 
     report_to_telegram(patch_url, integration_url)
