@@ -175,12 +175,12 @@ def publish_release(notes: str, prerelease: bool, files: list[str]):
     command = ["gh", "release", "create", "-n", notes, "-t"]
 
     if prerelease is True:
-        command.append("prerelease_version")
-        command.append("prerelease_version")
+        command.append(prerelease_version)
+        command.append(prerelease_version)
         command.append("--prerelease")
     else:
-        command.append("release_version")
-        command.append("release_version")
+        command.append(release_version)
+        command.append(release_version)
         command.append("--latest")
 
     if len(files) == 0:
