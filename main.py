@@ -23,7 +23,7 @@ def main():
     cli_url: str = "inotia00/revanced-cli"
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--version", action="store", dest="version", const=None, default=None)
+    parser.add_argument("-v", "--version", action="store", dest="version", default=None)
     args = parser.parse_args()
 
     if args.version is None:
