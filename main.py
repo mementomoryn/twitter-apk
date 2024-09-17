@@ -64,7 +64,8 @@ def main():
         return
 
     last_patch_version: github.GithubRelease | None = github.get_last_build_version(
-        patch_url
+        patch_url,
+        prerelease_patch
     )
 
     if last_patch_version is None:
@@ -72,7 +73,8 @@ def main():
         return
 
     last_integration_version: github.GithubRelease | None = github.get_last_build_version(
-        integration_url
+        integration_url,
+        prerelease_int
     )
 
     if last_integration_version is None:
