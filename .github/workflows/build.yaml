@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
       inputs:
         manual_version:
-          description: "Enter version code of app to build (leave it empty to choose latest)"
+          description: "Version Code (leave empty for auto)"
           required: false
           type: string
 
