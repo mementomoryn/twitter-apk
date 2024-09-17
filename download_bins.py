@@ -30,7 +30,7 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
 
 def download_apkeditor():
     print("Downloading apkeditor")
-    download_release_asset("REAndroid/APKEditor", "APKEditor", "bins", "apkeditor.jar")
+    download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
 def download_revanced_bins(repo_url: str, type: str, prerelease: bool):
