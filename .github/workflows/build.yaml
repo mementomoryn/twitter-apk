@@ -68,8 +68,8 @@ jobs:
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
-        if [ "${{ inputs.manual_version }}" ]; then
-          python main.py --version ${{ inputs.manual_version }}
+        if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
+          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_apk }}
         else
           python main.py
         fi
