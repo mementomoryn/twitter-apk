@@ -31,13 +31,21 @@ def count_releases(repo_url: str) -> int | None:
         return
 
 
-def get_last_build_version(repo_url: str) -> GithubRelease | None:
-    url = f"https://api.github.com/repos/{repo_url}/releases/latest"
+def get_last_build_version(repo_url: str, prerelease: bool = False) -> GithubRelease | None:
+    url = f"https://api.github.com/repos/{repo_url}/releases"
+
+    if prerelease is False:
+        url += "/latest"
+
     response = requests.get(url, headers=HEADERS)
 
     print("Get latest releases of " + repo_url + ": " + str(response.status_code))
     if response.status_code == 200:
-        release = response.json()
+
+        if prerelease is True:
+            release = response.json()[0]
+        else:
+            release = response.json()
 
         assets = [
             Asset(

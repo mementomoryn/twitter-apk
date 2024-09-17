@@ -5,8 +5,28 @@ on:
     - cron: "0 20 * * *"
   workflow_dispatch:
       inputs:
+        prerelease_cli:
+          description: "Include Pre-release CLI"
+          required: false
+          type: boolean
+          default: false
+        prerelease_patch:
+          description: "Include Pre-release Patches"
+          required: false
+          type: boolean
+          default: false
+        prerelease_int:
+          description: "Include Pre-release Integrations"
+          required: false
+          type: boolean
+          default: false
+        prerelease_apk:
+          description: "Include Pre-release APKs"
+          required: false
+          type: boolean
+          default: false
         manual_version:
-          description: "Version Code (leave empty for auto)"
+          description: "Version Code (empty for auto)"
           required: false
           type: string
 
@@ -36,6 +56,16 @@ jobs:
       uses: reecetech/version-increment@main
       with:
         scheme: calver
+    - name: Pre-release version
+      id: pre-release
+      run: |
+        release_version=${{ steps.release_version.outputs.v-version }}
+        git_sha_short=$(git rev-parse --short HEAD | sed 's/0*//')
+        if [[ $release_version != *-pre* ]]; then
+          echo "version=$release_version-pre.$git_sha_short" >> $GITHUB_OUTPUT
+        else
+          echo "version=$release_version" >> $GITHUB_OUTPUT
+        fi
     - name: Try building
       env: 
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -45,11 +75,12 @@ jobs:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
+        PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
-        if [ "${{ inputs.manual_version }}" ]; then
-          python main.py --version ${{ inputs.manual_version }}
+        if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
+          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_apk }}
         else
           python main.py
         fi

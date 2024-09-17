@@ -2,17 +2,23 @@ import requests
 import re
 from utils import panic, download
 
-def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
-    url = f"https://api.github.com/repos/{repo}/releases/latest"
+def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
+    url = f"https://api.github.com/repos/{repo}/releases"
+
+    if prerelease is False:
+        url += "/latest"
     
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception("Failed to fetch github")
 
-    assets = response.json()["assets"]
+    if prerelease is True:
+        release = response.json()[0]
+    else:
+        release = response.json()
 
     link = None
-    for i in assets:
+    for i in release["assets"]:
         if re.search(regex, i["name"]):
             link = i["browser_download_url"]
             if filename is None:
@@ -24,10 +30,10 @@ def download_release_asset(repo: str, regex: str, out_dir: str, filename=None):
 
 def download_apkeditor():
     print("Downloading apkeditor")
-    download_release_asset("REAndroid/APKEditor", "APKEditor", "bins", "apkeditor.jar")
+    download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
-def download_revanced_bins(repo_url: str, type: str):
+def download_revanced_bins(repo_url: str, type: str, prerelease: bool):
     match type:
         case "cli":
             print("Downloading cli")
@@ -44,7 +50,7 @@ def download_revanced_bins(repo_url: str, type: str):
         case _:
             panic("Assets bin type is not recognized")
 
-    download_release_asset(repo_url, regex, "bins", output)
+    download_release_asset(repo_url, regex, prerelease, "bins", output)
 
 
 if __name__ == "__main__":

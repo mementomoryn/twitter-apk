@@ -164,14 +164,24 @@ def patch_apk(
         shutil.move(cli_output, out)
 
 
-def publish_release(notes: str, files: list[str]):
+def publish_release(notes: str, prerelease: bool, files: list[str]):
     key = os.environ.get("GH_TOKEN")
     if key is None:
         raise Exception("GH_TOKEN is not set")
 
     release_version = os.environ["RELEASE_VERSION"]
+    prerelease_version = os.environ["PRERELEASE_VERSION"]
 
-    command = ["gh", "release", "create", "--latest", "-n", notes, "-t", release_version, release_version]
+    command = ["gh", "release", "create", "-n", notes, "-t"]
+
+    if prerelease is True:
+        command.append(prerelease_version)
+        command.append(prerelease_version)
+        command.append("--prerelease")
+    else:
+        command.append(release_version)
+        command.append(release_version)
+        command.append("--latest")
 
     if len(files) == 0:
         raise Exception("Files should have atleast one item")

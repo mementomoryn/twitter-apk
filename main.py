@@ -8,10 +8,13 @@ import os
 import argparse
 
 
-def get_latest_release(versions: list[Version]) -> Version | None:
-    for i in versions:
-        if i.version.find("release") >= 0:
-            return i
+def get_latest_release(versions: list[Version], prerelease: bool) -> Version | None:
+    if prerelease is True:
+        return versions[0]
+    else:
+        for i in versions:
+            if i.version.lower().find("beta") == -1 and i.version.lower().find("alpha") == -1:
+                return i
 
 
 def main():
@@ -23,20 +26,29 @@ def main():
     cli_url: str = "inotia00/revanced-cli"
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--version", action="store", dest="version", const=None, default=None)
+    parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", const=None, default=None)
+    parser.add_argument("-p", "--prerelease", nargs="*", action="store", dest="prerelease", choices=["true", "false"], default=["false", "false", "false", "false"])
     args = parser.parse_args()
+
+    if len(args.prerelease) != 4:
+        panic("prerelease arguments list is too short")
+    else:
+        prerelease_build: bool = "true" in args.prerelease
+        prerelease_cli: bool = args.prerelease[0] == "true"
+        prerelease_patch: bool = args.prerelease[1] == "true"
+        prerelease_int: bool = args.prerelease[2] == "true"
+        prerelease_apk: bool = args.prerelease[3] == "true"
 
     if args.version is None:
         versions = apkmirror.get_versions(url)
-        latest_version = get_latest_release(versions)
+        latest_version = get_latest_release(versions, prerelease_apk)
     else:
         latest_version = apkmirror.get_manual_version(url, args.version)
     
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    # only continue if latest_version is a release
-    if latest_version.version.find("release") < 0:
+    if latest_version.version.lower().find("beta") != -1 or latest_version.version.lower().find("alpha") != -1 and prerelease_apk is False:
         panic("Latest version is not a release version")
 
     last_build_version: github.GithubRelease | None = github.get_last_build_version(
@@ -52,7 +64,8 @@ def main():
         return
 
     last_patch_version: github.GithubRelease | None = github.get_last_build_version(
-        patch_url
+        patch_url,
+        prerelease_patch
     )
 
     if last_patch_version is None:
@@ -60,7 +73,8 @@ def main():
         return
 
     last_integration_version: github.GithubRelease | None = github.get_last_build_version(
-        integration_url
+        integration_url,
+        prerelease_int
     )
 
     if last_integration_version is None:
@@ -71,6 +85,8 @@ def main():
         print("First time building Piko Twitter!")
     elif args.version != None:
         print("Manual app version building!")
+    elif prerelease_build is True:
+        print("Pre-releases version building!")
     elif previous_version(2, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
     elif previous_version(0, last_build_version) != last_patch_version.tag_name:
@@ -86,7 +102,7 @@ def main():
 
     download_link: Variant | None = None
     for variant in variants:
-        if variant.is_bundle and variant.arcithecture == "universal":
+        if variant.is_bundle and variant.arcithecture == "universal" or variant.arcithecture == "arm64-v8a":
             download_link = variant
             break
 
@@ -104,11 +120,11 @@ def main():
     else:
         print("apkm is already merged")
 
-    download_revanced_bins(cli_url, "cli")
+    download_revanced_bins(cli_url, "cli", prerelease_cli)
 
-    download_revanced_bins(patch_url, "patch")
+    download_revanced_bins(patch_url, "patch", prerelease_patch)
 
-    download_revanced_bins(integration_url, "integration")
+    download_revanced_bins(integration_url, "integration", prerelease_int)
 
     build_apks(latest_version)
 
@@ -116,9 +132,10 @@ def main():
 
     publish_release(
         release_notes,
+        prerelease_build,
         [
             f"twitter-piko-v{latest_version.version}.apk",
-        ],
+        ]
     )
 
     report_to_telegram(patch_url, integration_url)
