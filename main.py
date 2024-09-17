@@ -24,7 +24,11 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", action="store", dest="version", default=None)
+    parser.add_argument("-p", "--prerelease", nargs='*', action="store", dest="prerelease", choices=["true", "false"], default=["false", "false", "false", "false"])
     args = parser.parse_args()
+
+    if len(args.prerelease) != 4:
+        panic("Unrecognized prerelease arguments list")
 
     if args.version is None:
         versions = apkmirror.get_versions(url)
