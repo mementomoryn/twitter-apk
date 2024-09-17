@@ -17,10 +17,8 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
     else:
         release = response.json()
 
-    assets = release["assets"]
-
     link = None
-    for i in assets:
+    for i in release["assets"]:
         if re.search(regex, i["name"]):
             link = i["browser_download_url"]
             if filename is None:
