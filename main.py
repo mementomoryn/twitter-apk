@@ -29,6 +29,11 @@ def main():
 
     if len(args.prerelease) != 4:
         panic("Unrecognized prerelease arguments list")
+    else:
+        prerelease_cli: bool = bool(args.prerelease[0])
+        prerelease_patches: bool = bool(args.prerelease[1])
+        prerelease_integrations: bool = bool(args.prerelease[2])
+        prerelease_apk: bool = bool(args.prerelease[3])
 
     if args.version is None:
         versions = apkmirror.get_versions(url)
