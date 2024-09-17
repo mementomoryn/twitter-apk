@@ -170,13 +170,18 @@ def publish_release(notes: str, prerelease: bool, files: list[str]):
         raise Exception("GH_TOKEN is not set")
 
     release_version = os.environ["RELEASE_VERSION"]
+    prerelease_version = os.environ["PRERELEASE_VERSION"]
 
-    command = ["gh", "release", "create", "-n", notes, "-t", release_version, release_version]
+    command = ["gh", "release", "create", "-n", notes, "-t"]
 
     if prerelease is True:
         command.append("--prerelease")
+        command.append("prerelease_version")
+        command.append("prerelease_version")
     else:
         command.append("--latest")
+        command.append("release_version")
+        command.append("release_version")
 
     if len(files) == 0:
         raise Exception("Files should have atleast one item")
