@@ -13,7 +13,7 @@ def get_latest_release(versions: list[Version], prerelease: bool) -> Version | N
         return versions[0]
     else:
         for i in versions:
-            if i.version.lower().find("beta") == -1 or i.version.lower().find("alpha") == -1:
+            if i.version.lower().find("beta") == -1 and i.version.lower().find("alpha") == -1:
                 return i
 
 
