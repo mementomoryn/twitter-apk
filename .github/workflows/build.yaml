@@ -36,6 +36,16 @@ jobs:
       uses: reecetech/version-increment@main
       with:
         scheme: calver
+    - name: Pre-release version
+      id: pre-release
+      run: |
+        release_version=${{ steps.release_version.outputs.v-version }}
+        git_sha_short=$(git rev-parse --short HEAD | sed 's/0*//')
+        if [[ $release_version == *-pre* ]]; then
+          echo "version=v$release_version" >> $GITHUB_OUTPUT
+        else
+          echo "version=v$release_version-pre.$git_sha_short" >> $GITHUB_OUTPUT
+        fi
     - name: Try building
       env: 
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -45,11 +55,12 @@ jobs:
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
+        PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
         CURRENT_REPOSITORY: ${{ github.repository }}
       run: |
         mkdir -p bins
         if [ "${{ inputs.manual_version }}" ]; then
-          python main.py --version ${{ inputs.manual_version }}
+          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_apk }}
         else
           python main.py
         fi
