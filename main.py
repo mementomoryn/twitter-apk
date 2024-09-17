@@ -9,11 +9,12 @@ import argparse
 
 
 def get_latest_release(versions: list[Version], prerelease: bool) -> Version | None:
+    print(prerelease)
     if prerelease is True:
         return versions[0]
     else:
         for i in versions:
-            if i.version.lower().find("beta") == -1 and i.version.lower().find("alpha") == -1:
+            if i.version.find("release") >= 0:
                 return i
 
 
