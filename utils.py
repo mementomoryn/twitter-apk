@@ -164,7 +164,7 @@ def patch_apk(
         shutil.move(cli_output, out)
 
 
-def publish_release(notes: str, files: list[str], prerelease: bool):
+def publish_release(notes: str, prerelease: bool files: list[str]):
     key = os.environ.get("GH_TOKEN")
     if key is None:
         raise Exception("GH_TOKEN is not set")
