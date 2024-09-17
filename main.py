@@ -9,7 +9,6 @@ import argparse
 
 
 def get_latest_release(versions: list[Version], prerelease: bool) -> Version | None:
-    print(prerelease)
     if prerelease is True:
         return versions[0]
     else:
