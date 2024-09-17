@@ -13,9 +13,11 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
         raise Exception("Failed to fetch github")
 
     if prerelease is True:
-        assets = response.json()[0]["assets"]
+        release = response.json()[0]
     else:
-        assets = response.json()["assets"]
+        release = response.json()
+
+    assets = release["assets"]
 
     link = None
     for i in assets:
