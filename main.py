@@ -33,10 +33,10 @@ def main():
     if len(args.prerelease) != 4:
         panic("prerelease arguments list is too short")
     else:
-        if "false" in args.prerelease:
-            prerelease_build: bool = False
-        else:
+        if "true" in args.prerelease:
             prerelease_build: bool = True
+        else:
+            prerelease_build: bool = False
 
         prerelease_cli: bool = bool(args.prerelease[0])
         prerelease_patch: bool = bool(args.prerelease[1])
