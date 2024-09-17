@@ -16,6 +16,5 @@ def build_apks(latest_version: Version):
         apk,
         includes=["Bring back twitter"],
         excludes=["Dynamic color", "Enable PiP mode automatically"],
-        riparch=["armeabi-v7a", "x86", "x86_64"],
         out=f"twitter-piko-v{latest_version.version}.apk",
     )
