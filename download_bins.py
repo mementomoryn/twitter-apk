@@ -2,7 +2,7 @@ import requests
 import re
 from utils import panic, download
 
-def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
+def download_release_asset(repo: str, regex: str, prerelease: bool = False, out_dir: str, filename=None):
     url = f"https://api.github.com/repos/{repo}/releases"
 
     if prerelease is False:
@@ -33,7 +33,7 @@ def download_apkeditor():
     download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
-def download_revanced_bins(repo_url: str, type: str, prerelease: bool):
+def download_revanced_bins(repo_url: str, type: str, prerelease: bool = False):
     match type:
         case "cli":
             print("Downloading cli")
