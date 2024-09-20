@@ -2,7 +2,7 @@ import requests
 import re
 from utils import panic, download
 
-def download_release_asset(repo: str, regex: str, prerelease: bool = False, out_dir: str, filename=None):
+def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
     url = f"https://api.github.com/repos/{repo}/releases"
 
     if prerelease is False:
