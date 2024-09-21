@@ -31,7 +31,7 @@ def main():
     args = parser.parse_args()
 
     if len(args.prerelease) != 4:
-        panic("prerelease arguments list is too short")
+        panic("Prerelease argument list is not correct")
     else:
         prerelease_build: bool = "true" in args.prerelease
         prerelease_cli: bool = args.prerelease[0] == "true"
