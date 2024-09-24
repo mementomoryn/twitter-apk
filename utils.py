@@ -36,14 +36,18 @@ def previous_version(index: int, changelog: str) -> str:
 
 
 def format_changelog(changelog: str) -> str:
-    loglist: str = changelog.split("### ")[1:]
+    if "# " in changelog:
+        replace: str = changelog.replace("# ", "### ")
+        loglist: str = replace.split("### ")[0:]
+    else:
+        loglist: str = changelog.split("### ")[1:]
     append: str = ["### " + log for log in loglist]
     join: str = ''.join(append)
 
     return join
 
 
-def report_to_telegram(patch_url: str, integration_url: str):
+def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str):
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
@@ -62,6 +66,7 @@ def report_to_telegram(patch_url: str, integration_url: str):
 
 Patches -> {patch_url}@{previous_version(0, release)}
 Integrations -> {integration_url}@{previous_version(1, release)}
+Xposed -> {xposed_url}@{previous_version(2, release)}
 
 ▼ Downloads ▼
 
