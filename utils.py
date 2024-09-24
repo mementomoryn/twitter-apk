@@ -103,7 +103,7 @@ def merge_apk(path: str):
     ).check_returncode()
 
 
-def patch_apk(
+def patch_revanced_apk(
     cli: str,
     integrations: str,
     patches: str,
@@ -153,6 +153,29 @@ def patch_apk(
             command.append(e)
 
     command.append(apk)
+
+    subprocess.run(command).check_returncode()
+
+    # remove -patched from the apk to match out
+    if out is not None:
+        cli_output = f"{str(apk).removesuffix(".apk")}-patched.apk"
+        if os.path.exists(out):
+            os.unlink(out)
+        shutil.move(cli_output, out)
+
+
+def patch_xposed_apk(
+    lspatch: str,
+    xposed: str,
+    apk: str,
+    out: str | None = None,
+):
+
+    command = [
+        "java",
+        "-jar",
+        lspatch,
+    ]
 
     subprocess.run(command).check_returncode()
 
