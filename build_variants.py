@@ -23,8 +23,8 @@ def build_apks(latest_version: Version):
     )
 
     patch_xposed_apk(
-        lspatch
-        xposed
-        apk
-        out=f"twitter-hachidori-v{latest_version.version}.apk"
+        lspatch,
+        xposed,
+        apk,
+        out=f"twitter-hachidori-v{latest_version.version}.apk",
     )
