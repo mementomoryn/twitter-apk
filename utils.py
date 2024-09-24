@@ -182,7 +182,7 @@ def patch_xposed_apk(
         "java",
         "-jar",
         lspatch,
-        "--embed"
+        "--embed",
         xposed,
         "--keystore",
         "ks.keystore",
