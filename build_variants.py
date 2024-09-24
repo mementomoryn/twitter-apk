@@ -1,5 +1,5 @@
 from apkmirror import Version
-from utils import patch_apk
+from utils import patch_revanced_apk, patch_xposed_apk
 
 
 def build_apks(latest_version: Version):
