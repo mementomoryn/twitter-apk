@@ -1,5 +1,5 @@
-# Piko Build
-Fully automated script to generate the latest stable version of X (Twitter), and patched it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
+# Chitter
+Automated script to download X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) and/or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
 
 <div align="center">
 
