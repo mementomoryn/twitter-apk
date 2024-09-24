@@ -185,11 +185,6 @@ def patch_xposed_apk(
         lspatch,
         "--embed",
         xposed,
-        "--keystore",
-        "ks.keystore",
-        keystore_password,
-        keystore_alias,
-        keystore_password,
         "--output",
         out_dir
     ]
