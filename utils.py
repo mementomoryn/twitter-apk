@@ -173,6 +173,7 @@ def patch_xposed_apk(
     lspatch: str,
     xposed: str,
     apk: str,
+    out_dir: str
     out: str | None = None,
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
@@ -190,12 +191,19 @@ def patch_xposed_apk(
         keystore_alias,
         keystore_password,
         "--output",
-        out
+        out_dir
     ]
 
     command.append(apk)
 
     subprocess.run(command).check_returncode()
+
+    if out is not None:
+        cli_output = os.listdir(out_dir)[0]
+        if os.path.exists(out):
+            os.unlink(out)
+        shutil.move(os.path.join(outdir, cli_output), os.getcwd())
+        os.rename(cli_output, out)
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):
