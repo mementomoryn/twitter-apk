@@ -38,6 +38,11 @@ def download_lspatch():
     download_release_asset("JingMatrix/LSPatch", "lspatch", False, "bins", "lspatch.jar")
 
 
+def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):
+    print("Downloading xposed")
+    download_release_asset(repo_url, regex, prerelease, "bins", "xposed.apk")
+
+
 def download_revanced_bins(repo_url: str, type: str, prerelease: bool = False):
     match type:
         case "cli":
