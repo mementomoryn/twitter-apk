@@ -202,7 +202,7 @@ def patch_xposed_apk(
         cli_output = os.listdir(out_dir)[0]
         if os.path.exists(out):
             os.unlink(out)
-        shutil.move(os.path.join(outdir, cli_output), os.getcwd())
+        shutil.move(os.path.join(out_dir, cli_output), os.getcwd())
         os.rename(cli_output, out)
 
 
