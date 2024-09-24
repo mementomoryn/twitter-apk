@@ -102,7 +102,7 @@ def main():
     elif previous_version(1, last_build_version) != last_integration_version.tag_name:
         print(f"New integration version found: {last_integration_version.tag_name}")
     elif previous_version(2, last_build_version) != last_xposed_version.tag_name:
-        print(f"New xposed version found: {last_xposed_version}")
+        print(f"New xposed version found: {last_xposed_version.tag_name}")
     elif previous_version(3, last_build_version) != latest_version.version:
         print(f"New twitter version found: {latest_version.version}")
     else:
