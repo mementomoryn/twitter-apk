@@ -173,7 +173,7 @@ def patch_xposed_apk(
     lspatch: str,
     xposed: str,
     apk: str,
-    out_dir: str
+    out_dir: str,
     out: str | None = None,
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
