@@ -26,5 +26,6 @@ def build_apks(latest_version: Version):
         lspatch,
         xposed,
         apk,
+        out_dir="lspatched"
         out=f"twitter-hachidori-v{latest_version.version}.apk",
     )
