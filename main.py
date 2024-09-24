@@ -151,7 +151,7 @@ def main():
         prerelease_build,
         [
             f"twitter-piko-v{latest_version.version}.apk",
-f"twitter-hachidori-v{latest_version.version}.apk",
+            f"twitter-hachidori-v{latest_version.version}.apk",
         ]
     )
 
