@@ -33,6 +33,11 @@ def download_apkeditor():
     download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
+def download_lspatch():
+    print("Downloading lspatch")
+    download_release_asset("JingMatrix/LSPatch", "lspatch", False, "bins", "lspatch.jar")
+
+
 def download_revanced_bins(repo_url: str, type: str, prerelease: bool = False):
     match type:
         case "cli":
