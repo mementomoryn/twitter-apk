@@ -24,20 +24,22 @@ def main():
     patch_url: str = "crimera/piko"
     integration_url: str = "crimera/revanced-integrations"
     cli_url: str = "inotia00/revanced-cli"
+    xposed_url: str = "Xposed-Modules-Repo/com.twifucker.hachidori"
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", const=None, default=None)
-    parser.add_argument("-p", "--prerelease", nargs="*", action="store", dest="prerelease", choices=["true", "false"], default=["false", "false", "false", "false"])
+    parser.add_argument("-p", "--prerelease", nargs="*", action="store", dest="prerelease", choices=["true", "false"], default=["false", "false", "false", "false", "false"])
     args = parser.parse_args()
 
-    if len(args.prerelease) != 4:
+    if len(args.prerelease) != 5:
         panic("Prerelease argument list is not correct")
     else:
         prerelease_build: bool = "true" in args.prerelease
         prerelease_cli: bool = args.prerelease[0] == "true"
         prerelease_patch: bool = args.prerelease[1] == "true"
         prerelease_int: bool = args.prerelease[2] == "true"
-        prerelease_apk: bool = args.prerelease[3] == "true"
+        prerelease_xp: bool = args.prerelease[3] == "true"
+        prerelease_apk: bool = args.prerelease[4] == "true"
 
     if args.version is None:
         versions = apkmirror.get_versions(url)
@@ -80,19 +82,29 @@ def main():
     if last_integration_version is None:
         panic("Failed to fetch the latest integration version")
 
+    last_xposed_version: github.GithubRelease | None = github.get_last_build_version(
+        xposed_url,
+        prerelease_xp
+    )
+
+    if last_xposed_version is None:
+        panic("Failed to fetch the latest xposed version")
+
     # checking for updates
     if count_releases == 0:
         print("First time building Piko Twitter!")
     elif args.version != None:
         print("Manual app version building!")
     elif prerelease_build is True:
-        print("Pre-releases version building!")
-    elif previous_version(2, last_build_version) != latest_version.version:
-        print(f"New twitter version found: {latest_version.version}")
+        print("Pre-releases version building!") 
     elif previous_version(0, last_build_version) != last_patch_version.tag_name:
         print(f"New patch version found: {last_patch_version.tag_name}")
     elif previous_version(1, last_build_version) != last_integration_version.tag_name:
         print(f"New integration version found: {last_integration_version.tag_name}")
+    elif previous_version(2, last_xposed_version) != last_xposed_version.version.tag_name:
+        print(f"New xposed version found: {last_xposed_version}")
+    elif previous_version(3, last_build_version) != latest_version.version:
+        print(f"New twitter version found: {latest_version.version}")
     else:
         print("No new version found")
         return
@@ -115,6 +127,8 @@ def main():
 
     download_apkeditor()
 
+    download_lspatch()
+
     if not os.path.exists("big_file_merged.apk"):
         merge_apk("big_file.apkm")
     else:
@@ -126,19 +140,22 @@ def main():
 
     download_revanced_bins(integration_url, "integration", prerelease_int)
 
+    download_xposed_bins(xposed_url, "Hachidori", prerelease_xp)
+
     build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body) + "\n## Integrations\n" + format_changelog(last_integration_version.body)
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body) + "\n## Integrations\n" + format_changelog(last_integration_version.body) + "\n## Xposed\n" + format_changelog(last_xposed_version.body)
 
     publish_release(
         release_notes,
         prerelease_build,
         [
             f"twitter-piko-v{latest_version.version}.apk",
+f"twitter-hachidori-v{latest_version.version}.apk",
         ]
     )
 
-    report_to_telegram(patch_url, integration_url)
+    report_to_telegram(patch_url, integration_url, xposed_url)
 
 
 if __name__ == "__main__":
