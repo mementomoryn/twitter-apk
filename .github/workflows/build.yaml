@@ -21,7 +21,7 @@ on:
           type: boolean
           default: false
         prerelease_xposed:
-          description: "Include Pre-release Xposed Modules"
+          description: "Include Pre-release Xposed"
           required: false
           type: boolean
           default: false
