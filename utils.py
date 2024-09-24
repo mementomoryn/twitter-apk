@@ -175,12 +175,23 @@ def patch_xposed_apk(
     apk: str,
     out: str | None = None,
 ):
+    keystore_password = os.environ["KEYSTORE_PASSWORD"]
+    keystore_alias = os.environ["KEYSTORE_ALIAS"]
 
     command = [
         "java",
         "-jar",
         lspatch,
+        "--embed"
+        xposed,
+        "--keystore",
+        "ks.keystore",
+        keystore_password,
+        keystore_alias,
+        keystore_password
     ]
+
+    command.append(apk)
 
     subprocess.run(command).check_returncode()
 
