@@ -144,7 +144,7 @@ def main():
 
     build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body) + "\n## Integrations\n" + format_changelog(last_integration_version.body) + "\n## Xposed\n" + format_changelog(last_xposed_version.body)
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body, True) + "\n## Integrations\n" + format_changelog(last_integration_version.body, True) + "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
 
     publish_release(
         release_notes,
