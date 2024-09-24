@@ -1,5 +1,5 @@
 # Chitter
-Automated scripts to download latest X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
+Automated scripts to download X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
 
 <div align="center">
 
