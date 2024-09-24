@@ -1,6 +1,6 @@
 from apkmirror import Version, Variant
 from build_variants import build_apks
-from download_bins import download_apkeditor, download_revanced_bins
+from download_bins import download_apkeditor, download_lspatch, download_xposed_bins, download_revanced_bins
 import github
 from utils import panic, merge_apk, publish_release, report_to_telegram, previous_version, format_changelog
 import apkmirror
