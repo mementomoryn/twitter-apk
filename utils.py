@@ -47,12 +47,12 @@ def format_changelog(changelog: str, sections: bool) -> str:
     return join
 
 
-def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str):
+def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str, prerelease: bool):
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
     repo_url: str = os.environ["CURRENT_REPOSITORY"]
-    release = get_last_build_version(repo_url)
+    release = get_last_build_version(repo_url, prerelease)
 
     if release is None:
         raise Exception("Could not fetch release")
@@ -61,8 +61,13 @@ def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str):
         f"[{asset.name}]({asset.browser_download_url})" for asset in release.assets
     ]
 
+    if prerelease is False:
+        message_title: str = "New Release Update !"
+    else:
+        message_title: str = "New Pre-release Update !"
+
     message = f"""
-[New Update Released !]({release.html_url})
+[{message_title}]({release.html_url})
 
 Patches -> {patch_url}@{previous_version(0, release)}
 Integrations -> {integration_url}@{previous_version(1, release)}
