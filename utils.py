@@ -183,7 +183,7 @@ def patch_xposed_apk(
     xposed: str,
     apk: str,
     out_dir: str,
-    out: str | None = None
+    out: str | None = None,
     cli: str | None = None,
     integrations: str | None = None,
     patches: str | None = None,
