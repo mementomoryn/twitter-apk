@@ -34,7 +34,7 @@ def main():
     if len(args.prerelease) != 5:
         panic("Prerelease argument list is not correct")
     else:
-        prerelease_build: bool = "true" in args.prerelease
+        prerelease_build: bool = "true" in args.prerelease or "pre" in os.environ["RELEASE_VERSION"]
         prerelease_cli: bool = args.prerelease[0] == "true"
         prerelease_patch: bool = args.prerelease[1] == "true"
         prerelease_int: bool = args.prerelease[2] == "true"
@@ -152,7 +152,7 @@ def main():
         release_files
     )
 
-    report_to_telegram(patch_url, integration_url, xposed_url)
+    report_to_telegram(patch_url, integration_url, xposed_url, prerelease_build)
 
 
 if __name__ == "__main__":
