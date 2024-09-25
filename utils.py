@@ -117,6 +117,7 @@ def patch_revanced_apk(
     excludes: list[str] | None = None,
     riparch: list[str] | None = None,
     out: str | None = None,
+    files: list
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
@@ -168,6 +169,8 @@ def patch_revanced_apk(
             os.unlink(out)
         shutil.move(cli_output, out)
 
+    files.append(out)
+
 
 def patch_xposed_apk(
     lspatch: str,
@@ -175,6 +178,7 @@ def patch_xposed_apk(
     apk: str,
     out_dir: str,
     out: str | None = None,
+    files: list
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
@@ -200,6 +204,8 @@ def patch_xposed_apk(
         shutil.move(os.path.join(out_dir, patch_output), os.getcwd())
         os.rename(patch_output, out)
         os.rmdir(out_dir)
+
+    files.append(out)
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):
