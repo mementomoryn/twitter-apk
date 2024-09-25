@@ -10,6 +10,7 @@ def build_apks(latest_version: Version):
     cli = "bins/cli.jar"
     xposed = "bins/xposed.apk"
     lspatch = "bins/lspatch.jar"
+    files = []
 
     patch_revanced_apk(
         cli,
@@ -20,6 +21,7 @@ def build_apks(latest_version: Version):
         excludes=["Dynamic color", "Enable PiP mode automatically"],
         riparch=["armeabi-v7a", "x86", "x86_64"],
         out=f"twitter-piko-v{latest_version.version}.apk",
+        files
     )
 
     patch_xposed_apk(
@@ -28,4 +30,7 @@ def build_apks(latest_version: Version):
         apk,
         out_dir="twitter-hachidori",
         out=f"twitter-hachidori-v{latest_version.version}.apk",
+        files
     )
+    
+    return files
