@@ -30,7 +30,11 @@ def build_apks(latest_version: Version):
         xposed,
         apk,
         out_dir="twitter-hachidori",
-        out=f"twitter-hachidori-v{latest_version.version}.apk"
+        out=f"twitter-hachidori-v{latest_version.version}.apk",
+        cli,
+        integrations,
+        patches,
+        riparch=["armeabi-v7a", "x86", "x86_64"]
     )
     
     return files
