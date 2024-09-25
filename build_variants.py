@@ -13,6 +13,7 @@ def build_apks(latest_version: Version):
     files = []
 
     patch_revanced_apk(
+        files,
         cli,
         integrations,
         patches,
@@ -20,17 +21,16 @@ def build_apks(latest_version: Version):
         includes=["Bring back twitter"],
         excludes=["Dynamic color", "Enable PiP mode automatically"],
         riparch=["armeabi-v7a", "x86", "x86_64"],
-        out=f"twitter-piko-v{latest_version.version}.apk",
-        files
+        out=f"twitter-piko-v{latest_version.version}.apk"
     )
 
     patch_xposed_apk(
+        files,
         lspatch,
         xposed,
         apk,
         out_dir="twitter-hachidori",
-        out=f"twitter-hachidori-v{latest_version.version}.apk",
-        files
+        out=f"twitter-hachidori-v{latest_version.version}.apk"
     )
     
     return files
