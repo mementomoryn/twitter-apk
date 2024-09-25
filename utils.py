@@ -183,11 +183,7 @@ def patch_xposed_apk(
     xposed: str,
     apk: str,
     out_dir: str,
-    out: str | None = None,
-    cli: str | None = None,
-    integrations: str | None = None,
-    patches: str | None = None,
-    riparch: list[str] | None = None
+    out: str | None = None
 ):
     command = [
         "java",
@@ -210,49 +206,6 @@ def patch_xposed_apk(
         shutil.move(os.path.join(out_dir, patch_output), os.getcwd())
         os.rename(patch_output, out)
         os.rmdir(out_dir)
-
-    if cli is not None and integrations is not None and patches is not None:
-        keystore_password = os.environ["KEYSTORE_PASSWORD"]
-        keystore_alias = os.environ["KEYSTORE_ALIAS"]
-
-        command_rv = [
-            "java",
-            "-jar",
-            cli,
-            "patch",
-            "-b",
-            patches,
-            "-m",
-            integrations,
-            "--keystore",
-            "ks.keystore",
-            "--keystore-entry-password",
-            keystore_password,
-            "--keystore-password",
-            keystore_password,
-            "--signer",
-            "mementomoryn",
-            "--keystore-entry-alias",
-            keystore_alias,
-            "--exclusive",
-            "-i",
-            "Bring back twitter"
-        ]
-        
-        if riparch is not None:
-            for r in riparch:
-                command_rv.append("--rip-lib")
-                command_rv.append(r)
-
-        command_rv.append(out)
-
-        subprocess.run(command_rv).check_returncode()
-
-        if out is not None:
-            cli_output = f"{str(out).removesuffix(".apk")}-patched.apk"
-            if os.path.exists(out):
-                os.unlink(out)
-            shutil.move(cli_output, out)
 
     files.append(out)
 
