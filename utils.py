@@ -241,15 +241,15 @@ def patch_xposed_apk(
         
         if riparch is not None:
             for r in riparch:
-                command.append("--rip-lib")
-                command.append(r)
+                command_rv.append("--rip-lib")
+                command_rv.append(r)
 
-        command.append(out)
+        command_rv.append(out)
 
-        subprocess.run(command).check_returncode()
+        subprocess.run(command_rv).check_returncode()
 
         if out is not None:
-            cli_output = f"{str(apk).removesuffix(".apk")}-patched.apk"
+            cli_output = f"{str(out).removesuffix(".apk")}-patched.apk"
             if os.path.exists(out):
                 os.unlink(out)
             shutil.move(cli_output, out)
