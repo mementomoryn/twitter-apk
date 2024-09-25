@@ -223,7 +223,7 @@ def publish_release(notes: str, prerelease: bool, files: list[str]):
 
     command = ["gh", "release", "create", "-n", notes, "-t"]
 
-    if prerelease is True or "pre" in release_version:
+    if prerelease is True:
         command.append(prerelease_version)
         command.append(prerelease_version)
         command.append("--prerelease")
