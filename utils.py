@@ -199,6 +199,7 @@ def patch_xposed_apk(
             os.unlink(out)
         shutil.move(os.path.join(out_dir, cli_output), os.getcwd())
         os.rename(cli_output, out)
+        os.rmdir(out_dir)
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):
