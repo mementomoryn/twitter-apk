@@ -142,17 +142,14 @@ def main():
 
     download_xposed_bins(xposed_url, "Hachidori", prerelease_xp)
 
-    build_apks(latest_version)
+    release_files: list = build_apks(latest_version)
 
     release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body, True) + "\n## Integrations\n" + format_changelog(last_integration_version.body, True) + "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
 
     publish_release(
         release_notes,
         prerelease_build,
-        [
-            f"twitter-piko-v{latest_version.version}.apk",
-            f"twitter-hachidori-v{latest_version.version}.apk",
-        ]
+        release_files
     )
 
     report_to_telegram(patch_url, integration_url, xposed_url)
