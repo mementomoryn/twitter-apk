@@ -31,9 +31,9 @@ def build_apks(latest_version: Version):
         apk,
         out_dir="twitter-hachidori",
         out=f"twitter-hachidori-v{latest_version.version}.apk",
-        cli,
-        integrations,
-        patches,
+        cli = cli,
+        integrations = integrations,
+        patches = patches,
         riparch=["armeabi-v7a", "x86", "x86_64"]
     )
     
