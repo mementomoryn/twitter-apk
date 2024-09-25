@@ -109,6 +109,7 @@ def merge_apk(path: str):
 
 
 def patch_revanced_apk(
+    files: list,
     cli: str,
     integrations: str,
     patches: str,
@@ -116,8 +117,7 @@ def patch_revanced_apk(
     includes: list[str] | None = None,
     excludes: list[str] | None = None,
     riparch: list[str] | None = None,
-    out: str | None = None,
-    files: list
+    out: str | None = None
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
@@ -173,12 +173,12 @@ def patch_revanced_apk(
 
 
 def patch_xposed_apk(
+    files: list,
     lspatch: str,
     xposed: str,
     apk: str,
     out_dir: str,
-    out: str | None = None,
-    files: list
+    out: str | None = None
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
