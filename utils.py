@@ -194,11 +194,11 @@ def patch_xposed_apk(
     subprocess.run(command).check_returncode()
 
     if out is not None:
-        cli_output = os.listdir(out_dir)[0]
+        patch_output = os.listdir(out_dir)[0]
         if os.path.exists(out):
             os.unlink(out)
-        shutil.move(os.path.join(out_dir, cli_output), os.getcwd())
-        os.rename(cli_output, out)
+        shutil.move(os.path.join(out_dir, patch_output), os.getcwd())
+        os.rename(patch_output, out)
         os.rmdir(out_dir)
 
 
