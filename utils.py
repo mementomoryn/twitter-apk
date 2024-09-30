@@ -38,7 +38,8 @@ def previous_version(index: int, changelog: str) -> str:
 def format_changelog(changelog: str, sections: bool) -> str:
     if sections is False:
         replace: str = changelog.replace("# ", "### ")
-        loglist: str = replace.split("### ")[1:-3]
+        logsplit: str = replace.split("### ")[1:]
+        loglist: str = logsplit[:-3]
     else:
         loglist: str = changelog.split("### ")[1:]
     append: str = ["### " + log for log in loglist]
