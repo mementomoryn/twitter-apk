@@ -113,6 +113,19 @@ def merge_apk(path: str):
     ).check_returncode()
 
 
+def move_merged_apk(
+    files: list,
+    apk: str,
+    out: str
+):
+    if out is not None:
+        if os.path.exists(out):
+            os.unlink(out)
+        shutil.move(apk, out)
+
+        files.append(out)
+
+
 def patch_revanced_apk(
     files: list,
     cli: str,
