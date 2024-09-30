@@ -35,20 +35,24 @@ def previous_version(index: int, changelog: str) -> str:
     return version
 
 
-def format_changelog(changelog: str) -> str:
-    loglist: str = changelog.split("### ")[1:]
+def format_changelog(changelog: str, sections: bool) -> str:
+    if sections is False:
+        replace: str = changelog.replace("# ", "### ")
+        loglist: str = replace.split("### ")[1:]
+    else:
+        loglist: str = changelog.split("### ")[1:]
     append: str = ["### " + log for log in loglist]
     join: str = ''.join(append)
 
     return join
 
 
-def report_to_telegram(patch_url: str, integration_url: str):
+def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str, prerelease: bool):
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
     repo_url: str = os.environ["CURRENT_REPOSITORY"]
-    release = get_last_build_version(repo_url)
+    release = get_last_build_version(repo_url, prerelease)
 
     if release is None:
         raise Exception("Could not fetch release")
@@ -57,11 +61,17 @@ def report_to_telegram(patch_url: str, integration_url: str):
         f"[{asset.name}]({asset.browser_download_url})" for asset in release.assets
     ]
 
+    if prerelease is False:
+        message_title: str = "New Release Update !"
+    else:
+        message_title: str = "New Pre-release Update !"
+
     message = f"""
-[New Update Released !]({release.html_url})
+[{message_title}]({release.html_url})
 
 Patches -> {patch_url}@{previous_version(0, release)}
 Integrations -> {integration_url}@{previous_version(1, release)}
+Xposed -> {xposed_url}@{previous_version(2, release)}
 
 ▼ Downloads ▼
 
@@ -103,7 +113,8 @@ def merge_apk(path: str):
     ).check_returncode()
 
 
-def patch_apk(
+def patch_revanced_apk(
+    files: list,
     cli: str,
     integrations: str,
     patches: str,
@@ -111,7 +122,7 @@ def patch_apk(
     includes: list[str] | None = None,
     excludes: list[str] | None = None,
     riparch: list[str] | None = None,
-    out: str | None = None,
+    out: str | None = None
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
@@ -162,6 +173,41 @@ def patch_apk(
         if os.path.exists(out):
             os.unlink(out)
         shutil.move(cli_output, out)
+
+    files.append(out)
+
+
+def patch_xposed_apk(
+    files: list,
+    lspatch: str,
+    xposed: str,
+    apk: str,
+    out_dir: str,
+    out: str | None = None
+):
+    command = [
+        "java",
+        "-jar",
+        lspatch,
+        "--embed",
+        xposed,
+        "--output",
+        out_dir
+    ]
+
+    command.append(apk)
+
+    subprocess.run(command).check_returncode()
+
+    if out is not None:
+        patch_output = os.listdir(out_dir)[0]
+        if os.path.exists(out):
+            os.unlink(out)
+        shutil.move(os.path.join(out_dir, patch_output), os.getcwd())
+        os.rename(patch_output, out)
+        os.rmdir(out_dir)
+
+    files.append(out)
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):

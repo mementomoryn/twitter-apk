@@ -20,6 +20,11 @@ on:
           required: false
           type: boolean
           default: false
+        prerelease_xposed:
+          description: "Include Pre-release Xposed"
+          required: false
+          type: boolean
+          default: false
         prerelease_apk:
           description: "Include Pre-release APKs"
           required: false
@@ -42,7 +47,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
-        java-version: '11'
+        java-version: '21'
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -80,7 +85,7 @@ jobs:
       run: |
         mkdir -p bins
         if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
-          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_apk }}
+          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
         else
           python main.py
         fi

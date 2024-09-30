@@ -1,5 +1,5 @@
-# Piko Build
-Automatically generate the latest stable version of Twitter, then patch it with [piko](https://github.com/crimera/piko).
+# Chitter
+Automated scripts to download X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
 
 <div align="center">
 
@@ -11,5 +11,7 @@ Automatically generate the latest stable version of Twitter, then patch it with 
 
 ## Credits
 - [@Crimera twitter-apk](https://github.com/crimera/twitter-apk) - The upstream of this repository
-- [@Crimera Piko](https://github.com/crimera/piko) - Patches used to build/modified Twitter APK
+- [@Crimera Piko](https://github.com/crimera/piko) - Patches used to build modified X (Twitter) APK
+- [@JingMatrix LSPatch](https://github.com/JingMatrix/LSPatch) - Tools used to integrate Xposed module for non-root devices
+- [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori) - Xposed module used to build modified X (Twitter) APK
 - [@REAndroid APKEditor](https://github.com/REAndroid/APKEditor) - Tools used to merge bundled split APK
