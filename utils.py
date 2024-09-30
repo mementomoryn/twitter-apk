@@ -118,12 +118,11 @@ def move_merged_apk(
     apk: str,
     out: str
 ):
-    if out is not None:
-        if os.path.exists(out):
-            os.unlink(out)
-        shutil.move(apk, out)
+    if os.path.exists(out):
+        os.unlink(out)
+    shutil.move(apk, out)
 
-        files.append(out)
+    files.append(out)
 
 
 def patch_revanced_apk(
