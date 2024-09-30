@@ -32,5 +32,11 @@ def build_apks(latest_version: Version):
         out_dir="twitter-hachidori",
         out=f"twitter-hachidori-v{latest_version.version}.apk"
     )
+
+    move_merged_apk(
+        files,
+        apk,
+        out=f"twitter-merged-v{latest_version.version}.apk"
+    )
     
     return files
