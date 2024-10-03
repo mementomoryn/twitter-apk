@@ -114,19 +114,19 @@ def merge_apk(path: str):
 
 
 def move_merged_apk(
-    files: list,
     apk: str,
-    out: str
+    out: str,
+    files: list | None = None
 ):
     if os.path.exists(out):
         os.unlink(out)
     shutil.move(apk, out)
 
-    files.append(out)
+    if files is not None:
+        files.append(out)
 
 
 def patch_revanced_apk(
-    files: list,
     cli: str,
     integrations: str,
     patches: str,
@@ -135,7 +135,8 @@ def patch_revanced_apk(
     excludes: list[str] | None = None,
     riparch: list[str] | None = None,
     exclusive: bool | None = None,
-    out: str | None = None
+    out: str | None = None,
+    files: list | None = None
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
     keystore_alias = os.environ["KEYSTORE_ALIAS"]
@@ -189,16 +190,17 @@ def patch_revanced_apk(
             os.unlink(out)
         shutil.move(cli_output, out)
 
-    files.append(out)
+    if files is not None:
+        files.append(out)
 
 
 def patch_xposed_apk(
-    files: list,
     lspatch: str,
     xposed: str,
     apk: str,
     out_dir: str,
-    out: str | None = None
+    out: str | None = None,
+    files: list | None = None
 ):
     command = [
         "java",
@@ -222,7 +224,8 @@ def patch_xposed_apk(
         os.rename(patch_output, out)
         os.rmdir(out_dir)
 
-    files.append(out)
+    if files is not None:
+        files.append(out)
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):
