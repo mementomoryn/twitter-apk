@@ -40,14 +40,14 @@ def build_apks(latest_version: Version):
         xposed,
         apk="bring-back-twitter.apk",
         out_dir="twitter-hachidori",
-        out=f"twitter-hachidori-v{latest_version.version}.apk"
+        out=f"twitter-hachidori-v{latest_version.version}.apk",
+        files=output_list
     )
 
     move_merged_apk(
-        files,
         apk,
         out=f"twitter-merged-v{latest_version.version}.apk",
         files=output_list
     )
     
-    return files
+    return output_list
