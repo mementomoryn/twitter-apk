@@ -134,6 +134,7 @@ def patch_revanced_apk(
     includes: list[str] | None = None,
     excludes: list[str] | None = None,
     riparch: list[str] | None = None,
+    exclusive: bool | None = None,
     out: str | None = None
 ):
     keystore_password = os.environ["KEYSTORE_PASSWORD"]
@@ -170,7 +171,9 @@ def patch_revanced_apk(
             command.append("-i")
             command.append(i)
 
-    if excludes is not None:
+    if exclusive is True:
+        command.append("--exclusive")
+    elif excludes is not None:
         for e in excludes:
             command.append("-e")
             command.append(e)
