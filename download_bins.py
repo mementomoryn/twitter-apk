@@ -72,7 +72,7 @@ def download_apkeditor():
     download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
-def download_lspatch(token: str):
+def download_lspatch():
     print("Downloading lspatch")
     download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", 4, "bins", "lspatch", "lspatch.jar", "lspatch.zip")
 
