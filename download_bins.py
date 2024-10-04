@@ -71,7 +71,7 @@ def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dir
 
         shutil.rmtree(full_dirname)
     else:
-        download_release_asset(repo, regex, False, out_dir, filename)
+        download_release_asset(repo, dirname, False, out_dir, filename)
 
 def download_apkeditor():
     print("Downloading apkeditor")
