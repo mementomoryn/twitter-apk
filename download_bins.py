@@ -61,7 +61,7 @@ def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, 
             if re.search(file_regex, file):
                 if os.path.exists(full_filename):
                     os.unlink(full_filename)
-                os.rename(f"{out_dir.lstrip("/")}/{file}", full_filename)
+                os.rename(f"{out_dir.lstrip("/")}/{dirname}/{file}", full_filename)
 
         shutil.rmtree(full_dirname)
     else:
