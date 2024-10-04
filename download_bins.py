@@ -46,16 +46,12 @@ def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, 
         if re.search(regex, i["name"]) and i["expired"] is False:
             link = i["archive_download_url"]
 
-            artifact_response = requests.get(link, HEADERS)
-            if artifact_response.status_code == 404:
-                raise Exception("Failed to fetch artifacts")
-
             if zipname is None:
                 zipname = i["name"] + ".zip"
             break
 
     if link is not None:
-        download(link, full_zipname)
+        download(link, full_zipname, HEADERS)
 
         shutil.unpack_archive(full_zipname, full_dirname)
 
