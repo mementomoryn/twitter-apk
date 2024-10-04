@@ -46,7 +46,8 @@ def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dir
         if re.search(regex, i["name"]) and i["expired"] is False:
             link = i["archive_download_url"]
 
-            HEADERS.update({"authorization": f"Bearer {os.environ["GH_TOKEN"]}"})
+            token = os.environ["GH_TOKEN"]
+            HEADERS.update({"authorization": f"Bearer {token}"})
             artifact_response = requests.get(link, HEADERS)
             if artifact_response.status_code != 302:
                 raise Exception("Failed to fetch artifacts")
