@@ -47,7 +47,7 @@ def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dir
             link = i["archive_download_url"]
 
             HEADERS.update({"authorization": f"Bearer {os.environ["GH_TOKEN"]}"})
-            artifact_response = request.get(link, HEADERS)
+            artifact_response = requests.get(link, HEADERS)
             if artifact_response.status_code != 302:
                 raise Exception("Failed to fetch artifacts")
 
