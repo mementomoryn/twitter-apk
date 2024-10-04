@@ -1,5 +1,8 @@
 import requests
 import re
+import os
+import shutil
+from constants import HEADER
 from utils import panic, download
 
 def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
@@ -28,6 +31,44 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
     download(link, f"{out_dir.lstrip("/")}/{filename}")
 
 
+def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dirname: str, filename: str, zipname=None):
+    url = f"https://api.github.com/repos/{repo}/actions/artifacts?per_page={count}"
+    full_dirname = f"{out_dir.lstrip("/")}/{dirname}"
+    full_filename = f"{out_dir.lstrip("/")}/{filename}"
+    full_zipname = f"{out_dir.lstrip("/")}/{zipname}"
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise Exception("Failed to fetch github")
+
+    link = None
+    for i in response.json()["artifacts"]:
+        if re.search(regex, i["name"]) and i["expired"] is False:
+            link = i["archive_download_url"]
+
+            HEADER.update({f"authorization: Bearer {os.environ["GH_TOKEN"]}"})
+            artifact_response = request.get(link, HEADER)
+            if artifact_response.status_code != 302:
+                raise Exception("Failed to fetch artifacts")
+
+            if zipname is None:
+                zipname = i["name"] + ".zip"
+            break
+
+    download(link, full_zipname)
+
+    shutil.unpack_archive(full_zipname, full_dirname)
+
+    os.remove(full.zipname)
+
+    for file in os.listdir(full_dirname):
+        if re.search(r"^jar-.*.jar", file):
+            if os.path.exists(full_filename):
+                os.unlink(full_filename)
+            os.rename(f"{out_dir.lstrip("/")}/{file}", full_filename)
+
+    shutil.rmtree(full_dirname)
+
 def download_apkeditor():
     print("Downloading apkeditor")
     download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
@@ -35,7 +76,7 @@ def download_apkeditor():
 
 def download_lspatch():
     print("Downloading lspatch")
-    download_release_asset("JingMatrix/LSPatch", "lspatch", False, "bins", "lspatch.jar")
+    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", 4, "bins", "lspatch", "lspatch.jar", "lspatch.zip")
 
 
 def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):
