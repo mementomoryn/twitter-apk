@@ -56,19 +56,22 @@ def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dir
                 zipname = i["name"] + ".zip"
             break
 
-    download(link, full_zipname)
+    if link is not None:
+        download(link, full_zipname)
 
-    shutil.unpack_archive(full_zipname, full_dirname)
+        shutil.unpack_archive(full_zipname, full_dirname)
 
-    os.remove(full.zipname)
+        os.remove(full.zipname)
 
-    for file in os.listdir(full_dirname):
-        if re.search(r"^jar-.*.jar", file):
-            if os.path.exists(full_filename):
-                os.unlink(full_filename)
-            os.rename(f"{out_dir.lstrip("/")}/{file}", full_filename)
+        for file in os.listdir(full_dirname):
+            if re.search(r"^jar-.*.jar", file):
+                if os.path.exists(full_filename):
+                    os.unlink(full_filename)
+                os.rename(f"{out_dir.lstrip("/")}/{file}", full_filename)
 
-    shutil.rmtree(full_dirname)
+        shutil.rmtree(full_dirname)
+    else:
+        download_release_asset(repo, regex, False, out_dir, filename)
 
 def download_apkeditor():
     print("Downloading apkeditor")
