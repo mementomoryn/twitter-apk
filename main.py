@@ -127,7 +127,7 @@ def main():
 
     download_apkeditor()
 
-    download_lspatch(os.environ[GH_TOKEN])
+    download_lspatch(os.environ["GH_TOKEN"])
 
     if not os.path.exists("big_file_merged.apk"):
         merge_apk("big_file.apkm")
