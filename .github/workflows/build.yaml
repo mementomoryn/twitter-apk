@@ -72,7 +72,7 @@ jobs:
           echo "version=$release_version" >> $GITHUB_OUTPUT
         fi
     - name: Assign github token authorization  
-        uses: cschleiden/replace-tokens@master
+      uses: cschleiden/replace-tokens@master
       with:
         tokenPrefix: '${'
         tokenSuffix: '}'
