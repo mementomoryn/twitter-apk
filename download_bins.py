@@ -2,7 +2,7 @@ import requests
 import re
 import os
 import shutil
-from constants import HEADER
+from constants import HEADERS
 from utils import panic, download
 
 def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
@@ -46,8 +46,8 @@ def download_artifact_asset(repo: str, regex: str, count: int, out_dir: str, dir
         if re.search(regex, i["name"]) and i["expired"] is False:
             link = i["archive_download_url"]
 
-            HEADER.update({f"authorization: Bearer {os.environ["GH_TOKEN"]}"})
-            artifact_response = request.get(link, HEADER)
+            HEADERS.update({f"authorization: Bearer {os.environ["GH_TOKEN"]}"})
+            artifact_response = request.get(link, HEADERS)
             if artifact_response.status_code != 302:
                 raise Exception("Failed to fetch artifacts")
 
