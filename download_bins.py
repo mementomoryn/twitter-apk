@@ -55,7 +55,7 @@ def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, 
 
         shutil.unpack_archive(full_zipname, full_dirname)
 
-        os.remove(full.zipname)
+        os.remove(full_zipname)
 
         for file in os.listdir(full_dirname):
             if re.search(file_regex, file):
