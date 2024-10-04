@@ -71,6 +71,14 @@ jobs:
         else
           echo "version=$release_version" >> $GITHUB_OUTPUT
         fi
+    - name: Assign github token authorization  
+        uses: cschleiden/replace-tokens@master
+      with:
+        tokenPrefix: '${'
+        tokenSuffix: '}'
+        files: '["constants.py"]'
+      env :
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     - name: Try building
       env: 
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
