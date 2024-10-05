@@ -31,7 +31,7 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
     download(link, f"{out_dir.lstrip("/")}/{filename}")
 
 
-def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, out_dir: str, dirname: str, filename: str, zipname=None):
+def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, release_regex: str, count: int, out_dir: str, dirname: str, filename: str, zipname=None):
     url = f"https://api.github.com/repos/{repo}/actions/artifacts?per_page={count}"
     full_dirname = f"{out_dir.lstrip("/")}/{dirname}"
     full_filename = f"{out_dir.lstrip("/")}/{filename}"
@@ -43,7 +43,7 @@ def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, 
 
     link = None
     for i in response.json()["artifacts"]:
-        if re.search(regex, i["name"]) and i["expired"] is False:
+        if re.search(artifact_regex, i["name"]) and i["expired"] is False:
             link = i["archive_download_url"]
 
             if zipname is None:
@@ -58,14 +58,14 @@ def download_artifact_asset(repo: str, regex: str, file_regex: str, count: int, 
         os.remove(full_zipname)
 
         for file in os.listdir(full_dirname):
-            if re.search(file_regex, file):
+            if re.search(archive_regex, file):
                 if os.path.exists(full_filename):
                     os.unlink(full_filename)
                 os.rename(f"{out_dir.lstrip("/")}/{dirname}/{file}", full_filename)
 
         shutil.rmtree(full_dirname)
     else:
-        download_release_asset(repo, dirname, False, out_dir, filename)
+        download_release_asset(repo, release_regex, False, out_dir, filename)
 
 def download_apkeditor():
     print("Downloading apkeditor")
@@ -74,7 +74,7 @@ def download_apkeditor():
 
 def download_lspatch():
     print("Downloading lspatch")
-    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", 4, "bins", "lspatch", "lspatch.jar", "lspatch.zip")
+    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", "lspatch", 4, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
 
 
 def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):
