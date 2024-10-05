@@ -31,7 +31,7 @@ on:
           type: boolean
           default: false
         manual_version:
-          description: "Version Code (empty for auto)"
+          description: "Version Number (empty for auto)"
           required: false
           type: string
 
