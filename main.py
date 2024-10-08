@@ -6,6 +6,7 @@ from utils import panic, merge_apk, publish_release, report_to_telegram, previou
 import apkmirror
 import os
 import argparse
+from config import APKMIRROR_URL, REVANCED_PATCH_REPOSITORY, REVANCED_INTEGRATION_REPOSITORY, REVANCED_CLI_REPOSITORY, XPOSED_MODULE_REPOSITORY, ENABLED_BINS
 
 
 def get_latest_release(versions: list[Version], prerelease: bool) -> Version | None:
@@ -19,13 +20,13 @@ def get_latest_release(versions: list[Version], prerelease: bool) -> Version | N
 
 def main():
     # get latest version
-    url: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
+    url: str = APKMIRROR_URL
     repo_url: str = os.environ["CURRENT_REPOSITORY"]
-    patch_url: str = "crimera/piko"
-    integration_url: str = "crimera/revanced-integrations"
-    cli_url: str = "inotia00/revanced-cli"
-    xposed_url: str = "Xposed-Modules-Repo/com.twifucker.hachidori"
-    bins_list: list = ["revanced", "xposed", "apkeditor"]
+    patch_url: str = REVANCED_PATCH_REPOSITORY
+    integration_url: str = REVANCED_INTEGRATION_REPOSITORY
+    cli_url: str = REVANCED_CLI_REPOSITORY
+    xposed_url: str = XPOSED_MODULE_REPOSITORY
+    bins_list: list = ENABLED_BINS
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", const=None, default=None)
