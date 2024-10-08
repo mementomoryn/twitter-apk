@@ -97,14 +97,14 @@ def main():
         print("Manual app version building!")
     elif prerelease_build is True:
         print("Pre-releases version building!") 
-    elif previous_version(0, last_build_version) != last_patch_version.tag_name:
-        print(f"New patch version found: {last_patch_version.tag_name}")
-    elif previous_version(1, last_build_version) != last_integration_version.tag_name:
-        print(f"New integration version found: {last_integration_version.tag_name}")
+    elif previous_version(0, last_build_version) != last_patch_version.tag_name or previous_version(1, last_build_version) != last_integration_version.tag_name:
+        print(f"New revanced version found!")
+        print(f"New patch version found: {previous_version(0, last_build_version)} -> {last_patch_version.tag_name}")
+        print(f"New integration version found: {previous_version(1, last_build_version)} -> {last_integration_version.tag_name}")
     elif previous_version(2, last_build_version) != last_xposed_version.tag_name:
-        print(f"New xposed version found: {last_xposed_version.tag_name}")
+        print(f"New xposed version found: {previous_version(2, last_build_version)} -> {last_xposed_version.tag_name}")
     elif previous_version(3, last_build_version) != latest_version.version:
-        print(f"New app version found: {latest_version.version}")
+        print(f"New app version found: {previous_version(3, last_build_version)} -> {latest_version.version}")
     else:
         print("No new version found")
         return
