@@ -25,6 +25,7 @@ def main():
     integration_url: str = "crimera/revanced-integrations"
     cli_url: str = "inotia00/revanced-cli"
     xposed_url: str = "Xposed-Modules-Repo/com.twifucker.hachidori"
+    bins_list: list = ["revanced", "xposed", "apkeditor"]
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", const=None, default=None)
@@ -70,7 +71,7 @@ def main():
         prerelease_patch
     )
 
-    if last_patch_version is None:
+    if last_patch_version is None and "revanced" in bins_list:
         panic("Failed to fetch the latest patch version")
         return
 
@@ -79,7 +80,7 @@ def main():
         prerelease_int
     )
 
-    if last_integration_version is None:
+    if last_integration_version is None and "revanced" in bins_list:
         panic("Failed to fetch the latest integration version")
 
     last_xposed_version: github.GithubRelease | None = github.get_last_build_version(
@@ -87,7 +88,7 @@ def main():
         prerelease_xp
     )
 
-    if last_xposed_version is None:
+    if last_xposed_version is None and "xposed" in bins_list:
         panic("Failed to fetch the latest xposed version")
 
     # checking for updates
@@ -97,11 +98,11 @@ def main():
         print("Manual app version building!")
     elif prerelease_build is True:
         print("Pre-releases version building!") 
-    elif previous_version(0, last_build_version) != last_patch_version.tag_name or previous_version(1, last_build_version) != last_integration_version.tag_name:
+    elif (previous_version(0, last_build_version) != last_patch_version.tag_name or previous_version(1, last_build_version) != last_integration_version.tag_name) and "revanced" in bins_list:
         print(f"New revanced version found!")
         print(f"New patch version found: {previous_version(0, last_build_version)} -> {last_patch_version.tag_name}")
         print(f"New integration version found: {previous_version(1, last_build_version)} -> {last_integration_version.tag_name}")
-    elif previous_version(2, last_build_version) != last_xposed_version.tag_name:
+    elif previous_version(2, last_build_version) != last_xposed_version.tag_name and "xposed" in bins_list:
         print(f"New xposed version found: {previous_version(2, last_build_version)} -> {last_xposed_version.tag_name}")
     elif previous_version(3, last_build_version) != latest_version.version:
         print(f"New app version found: {previous_version(3, last_build_version)} -> {latest_version.version}")
@@ -125,26 +126,47 @@ def main():
     if not os.path.exists("big_file.apkm"):
         panic("Failed to download apk")
 
-    download_apkeditor()
-
-    download_lspatch()
+    if "apkeditor" in bins_list:
+        download_apkeditor()
 
     if not os.path.exists("big_file_merged.apk"):
         merge_apk("big_file.apkm")
     else:
         print("apkm is already merged")
 
-    download_revanced_bins(cli_url, "cli", prerelease_cli)
+    if "revanced" in bins_list:
+        download_revanced_bins(cli_url, "cli", prerelease_cli)
+        download_revanced_bins(patch_url, "patch", prerelease_patch)
+        download_revanced_bins(integration_url, "integration", prerelease_int)
 
-    download_revanced_bins(patch_url, "patch", prerelease_patch)
+        revanced_version_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n"
 
-    download_revanced_bins(integration_url, "integration", prerelease_int)
+        if last_patch_version.body != "":
+            patch_changelog_notes: str = "\n\n## Patches\n" + format_changelog(last_patch_version.body, True)
 
-    download_xposed_bins(xposed_url, "Hachidori", prerelease_xp)
+        if last_patch_version.body != "":
+            integration_changelog_notes: str = "\n## Integrations\n" + format_changelog(last_integration_version.body, True)
+
+        revanced_changelog_notes: str = patch_changelog_notes + integration_changelog_notes
+    else:
+        revanced_version_notes: str = ""
+        revanced_changelog_notes: str = ""
+
+    if "xposed" in bins_list:
+        download_lspatch()
+        download_xposed_bins(xposed_url, "Hachidori", prerelease_xp)
+
+        xposed_version_notes: str = "**Xposed**: " + last_xposed_version.tag_name + "\n\n"
+
+        if last_xposed_version.body != "":
+            xposed_changelog_notes: str = "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
+    else:
+        xposed_version_notes: str = ""
+        xposed_changelog_notes: str = ""
 
     release_files: list = build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**App**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body, True) + "\n## Integrations\n" + format_changelog(last_integration_version.body, True) + "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
+    release_notes: str = revanced_version_notes + xposed_version_notes + "**App**: " + latest_version.version + xposed_changelog_notes + xposed_changelog_notes
 
     publish_release(
         release_notes,
