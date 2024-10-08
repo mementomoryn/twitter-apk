@@ -83,6 +83,20 @@ Xposed -> {xposed_url}@{previous_version(2, release)}
     send_message(message, tg_token, tg_chat_id, tg_thread_id)
 
 
+def extract_archive(zip_path: str, dir_path: str, file_path: str, regex: str):
+    shutil.unpack_archive(zip_path, dir_path)
+
+    os.remove(zip_path)
+
+    for i in os.listdir(dir_path):
+        if re.search(regex, i):
+            if os.path.exists(file_path):
+                os.unlink(file_path)
+            os.rename(f"{dir_path}/{i}", file_path)
+
+    shutil.rmtree(dir_path)
+
+
 def download(link, out, headers=None):
     if os.path.exists(out):
         print(f"{out} already exists skipping download")
