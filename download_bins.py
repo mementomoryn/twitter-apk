@@ -33,9 +33,6 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
 
 def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, release_regex: str, count: int, out_dir: str, dirname: str, filename: str, zipname=None):
     url = f"https://api.github.com/repos/{repo}/actions/artifacts?per_page={count}"
-    full_dirname = f"{out_dir.lstrip("/")}/{dirname}"
-    full_filename = f"{out_dir.lstrip("/")}/{filename}"
-    full_zipname = f"{out_dir.lstrip("/")}/{zipname}"
 
     response = requests.get(url)
     if response.status_code != 200:
@@ -51,19 +48,13 @@ def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, 
             break
 
     if link is not None:
-        download(link, full_zipname, HEADERS)
+        zip_path = f"{out_dir.lstrip("/")}/{zipname}"
+        dir_path = f"{out_dir.lstrip("/")}/{dirname}"
+        file_path = f"{out_dir.lstrip("/")}/{filename}"
 
-        shutil.unpack_archive(full_zipname, full_dirname)
+        download(link, zip_path, HEADERS)
 
-        os.remove(full_zipname)
-
-        for file in os.listdir(full_dirname):
-            if re.search(archive_regex, file):
-                if os.path.exists(full_filename):
-                    os.unlink(full_filename)
-                os.rename(f"{out_dir.lstrip("/")}/{dirname}/{file}", full_filename)
-
-        shutil.rmtree(full_dirname)
+        extract_archive(zip_path, dir_path, file_path, archive_regex)
     else:
         download_release_asset(repo, release_regex, False, out_dir, filename)
 
