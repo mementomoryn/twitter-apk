@@ -31,7 +31,7 @@ on:
           type: boolean
           default: false
         manual_version:
-          description: "Version Number (empty for auto)"
+          description: "APK Version Number (empty for auto)"
           required: false
           type: string
 
