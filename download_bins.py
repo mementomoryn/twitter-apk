@@ -1,7 +1,5 @@
 import requests
 import re
-import os
-import shutil
 from constants import HEADERS
 from utils import panic, download
 
