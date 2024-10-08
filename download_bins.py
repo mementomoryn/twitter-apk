@@ -29,7 +29,7 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
     download(link, f"{out_dir.lstrip("/")}/{filename}")
 
 
-def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, release_regex: str, count: int, out_dir: str, dirname: str, filename: str, zipname=None):
+def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, release_regex: str, count: int, keep_dir: bool, out_dir: str, dirname: str, filename: str, zipname=None):
     url = f"https://api.github.com/repos/{repo}/actions/artifacts?per_page={count}"
 
     response = requests.get(url)
@@ -52,18 +52,25 @@ def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, 
 
         download(link, zip_path, HEADERS)
 
-        extract_archive(zip_path, dir_path, file_path, archive_regex)
+        extract_archive(zip_path, dir_path, file_path, archive_regex, keep_dir)
     else:
         download_release_asset(repo, release_regex, False, out_dir, filename)
+
 
 def download_apkeditor():
     print("Downloading apkeditor")
     download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
 
 
+def download_apkrenamer():
+    print("Downloading apkrenamer")
+    download_release_asset("dvaoru/ApkRenamer", "ApkRenamer", False, "bins", "apkrenamer.zip")
+    extract_archive("bins/apkrenamer.zip", "bins/apkrenamer", "", "", True, "bins", "ApkRenamer")
+
+
 def download_lspatch():
     print("Downloading lspatch")
-    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", "lspatch", 4, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
+    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
 
 
 def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):
