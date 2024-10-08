@@ -1,7 +1,7 @@
 import requests
 import re
 from constants import HEADERS
-from utils import panic, download
+from utils import panic, extract_archive, download
 
 def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
     url = f"https://api.github.com/repos/{repo}/releases"
