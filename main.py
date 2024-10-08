@@ -92,7 +92,7 @@ def main():
 
     # checking for updates
     if count_releases == 0:
-        print("First time building Piko Twitter!")
+        print("First time building!")
     elif args.version != None:
         print("Manual app version building!")
     elif prerelease_build is True:
@@ -104,7 +104,7 @@ def main():
     elif previous_version(2, last_build_version) != last_xposed_version.tag_name:
         print(f"New xposed version found: {last_xposed_version.tag_name}")
     elif previous_version(3, last_build_version) != latest_version.version:
-        print(f"New twitter version found: {latest_version.version}")
+        print(f"New app version found: {latest_version.version}")
     else:
         print("No new version found")
         return
@@ -144,7 +144,7 @@ def main():
 
     release_files: list = build_apks(latest_version)
 
-    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**Twitter**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body, True) + "\n## Integrations\n" + format_changelog(last_integration_version.body, True) + "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
+    release_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n**Xposed**: " + last_xposed_version.tag_name + "\n\n**App**: " + latest_version.version + "\n\n## Patches\n" + format_changelog(last_patch_version.body, True) + "\n## Integrations\n" + format_changelog(last_integration_version.body, True) + "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
 
     publish_release(
         release_notes,
