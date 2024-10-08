@@ -165,7 +165,7 @@ def patch_revanced_apk(
         "-m",
         integrations,
         "--keystore",
-        "ks.keystore",
+        "bks.keystore",
         "--keystore-entry-password",
         keystore_password,
         "--keystore-password",
@@ -216,12 +216,20 @@ def patch_xposed_apk(
     out: str | None = None,
     files: list | None = None
 ):
+    keystore_password = os.environ["KEYSTORE_PASSWORD"]
+    keystore_alias = os.environ["KEYSTORE_ALIAS"]
+    
     command = [
         "java",
         "-jar",
         lspatch,
         "--embed",
         xposed,
+        "--keystore",
+        "jks.keystore",
+        keystore_password,
+        keystore_alias,
+        keystore_password,
         "--output",
         out_dir
     ]
