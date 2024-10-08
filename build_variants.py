@@ -10,6 +10,7 @@ def build_apks(latest_version: Version):
     cli = "bins/cli.jar"
     xposed = "bins/xposed.apk"
     lspatch = "bins/lspatch.jar"
+    apkrenamer = "bins/apkrenamer/renamer.jar"
     output_list = []
 
     patch_revanced_apk(
