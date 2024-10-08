@@ -93,13 +93,13 @@ def extract_archive(zip_path: str, dir_path: str, file_path: str, regex: str, ke
 
     os.remove(zip_path)
 
-    for i in os.listdir(dir_path):
-        if re.search(regex, i):
-            if os.path.exists(file_path):
-                os.unlink(file_path)
-            os.rename(f"{dir_path}/{i}", file_path)
-
     if keep_dir is False:
+        for i in os.listdir(dir_path):
+            if re.search(regex, i):
+                if os.path.exists(file_path):
+                    os.unlink(file_path)
+                os.rename(f"{dir_path}/{i}", file_path)
+
         shutil.rmtree(dir_path)
 
 
