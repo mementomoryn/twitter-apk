@@ -146,6 +146,37 @@ def move_merged_apk(
         files.append(out)
 
 
+def rename_apk(
+    renamer: str,
+    apk: str,
+    out: str,
+    name: str,
+    package: str,
+    icon: str | None = None,
+    files: list | None = None
+):
+    command = [
+        "java",
+        "-jar"
+        renamer
+        "-a",
+        apk,
+        "-o",
+        out,
+        "-n",
+        name,
+        "-p",
+        package
+    ]
+
+    if icon is not None:
+        command.append("-i")
+        command.append(icon)
+
+    if files is not None:
+        files.append(out)
+
+
 def patch_revanced_apk(
     cli: str,
     integrations: str,
