@@ -89,7 +89,7 @@ def extract_archive(zip_path: str, dir_path: str, file_path: str, regex: str, ke
         shutil.unpack_archive(zip_path, dir_path)
     else:
         shutil.unpack_archive(zip_path, out_dir)
-        os.rename(f"{out_dir}.lstrip('/')/{folders}", dir_path)
+        os.rename(f"{out_dir.lstrip("/")}/{folders}", dir_path)
 
     os.remove(zip_path)
 
