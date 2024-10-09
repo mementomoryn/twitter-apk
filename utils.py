@@ -157,8 +157,8 @@ def rename_apk(
 ):
     command = [
         "java",
-        "-jar"
-        renamer
+        "-jar",
+        renamer,
         "-a",
         apk,
         "-o",
