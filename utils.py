@@ -36,13 +36,12 @@ def previous_version(index: int, changelog: str) -> str:
     return version
 
 
-def format_changelog(changelog: str, types: str) -> str:
-    match(types):
-        case "hachidori":
-            replace: str = changelog.replace("# ", "### ")
-            loglist: str = "\r\n\r\n".join(replace.split("\r\n\r\n")[:-3]).split("### ")[1:]
-        case "piko":
-            loglist: str = changelog.split("### ")[1:]
+def format_changelog(changelog: str, sections: str) -> str:
+    if sections is False
+        replace: str = changelog.replace("# ", "### ")
+        loglist: str = "\r\n\r\n".join(replace.split("\r\n\r\n")[:-3]).split("### ")[1:]
+    else:
+        loglist: str = changelog.split("### ")[1:]
     append: str = ["### " + log for log in loglist]
     join: str = ''.join(append)
 
