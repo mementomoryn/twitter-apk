@@ -178,7 +178,7 @@ def main():
         release_files
     )
 
-    report_to_telegram(patch_url, integration_url, xposed_url, prerelease_build)
+    report_to_telegram(patch_url, integration_url, xposed_url, prerelease_build, "revanced" in bins_list, "xposed" in bins_list)
 
 
 if __name__ == "__main__":
