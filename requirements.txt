@@ -1,2 +1,4 @@
 requests
 beautifulsoup4
+selenium-wire
+undetected-chromedriver
