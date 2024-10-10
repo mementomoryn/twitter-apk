@@ -48,7 +48,7 @@ def format_changelog(changelog: str, sections: str) -> str:
     return join
 
 
-def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str, prerelease: bool):
+def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str, prerelease: bool, revanced: bool, xposed: bool):
     tg_token = os.environ["TG_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
     tg_thread_id = os.environ["TG_THREAD_ID"]
@@ -67,12 +67,26 @@ def report_to_telegram(patch_url: str, integration_url: str, xposed_url: str, pr
     else:
         message_title: str = "New Pre-release Update !"
 
-    message = f"""
-[{message_title}]({release.html_url})
-
+    if revanced and xposed is True:
+        versions: str = f"""
 Patches -> {patch_url}@{previous_version(0, release)}
 Integrations -> {integration_url}@{previous_version(1, release)}
 Xposed -> {xposed_url}@{previous_version(2, release)}
+"""
+    elif revanced is True:
+        versions: str = f"""
+Patches -> {patch_url}@{previous_version(0, release)}
+Integrations -> {integration_url}@{previous_version(1, release)}
+"""
+    elif xposed is True:
+        versions: str = f"""
+Xposed -> {xposed_url}@{previous_version(2, release)}
+"""
+
+    message = f"""
+[{message_title}]({release.html_url})
+
+{versions}
 
 ▼ Downloads ▼
 
