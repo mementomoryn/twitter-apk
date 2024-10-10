@@ -1,5 +1,6 @@
 import requests
 import re
+from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY, APKRENAMER_REPOSITORY
 from constants import HEADERS
 from utils import panic, extract_archive, download
 
@@ -59,18 +60,18 @@ def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, 
 
 def download_apkeditor():
     print("Downloading apkeditor")
-    download_release_asset("REAndroid/APKEditor", "APKEditor", False, "bins", "apkeditor.jar")
+    download_release_asset(APKEDITOR_REPOSITORY, "APKEditor", False, "bins", "apkeditor.jar")
 
 
 def download_apkrenamer():
     print("Downloading apkrenamer")
-    download_release_asset("dvaoru/ApkRenamer", "ApkRenamer", False, "bins", "apkrenamer.zip")
+    download_release_asset(APKRENAMER_REPOSITORY, "ApkRenamer", False, "bins", "apkrenamer.zip")
     extract_archive("bins/apkrenamer.zip", "bins/apkrenamer", "", "", True, "bins", "ApkRenamer")
 
 
 def download_lspatch():
     print("Downloading lspatch")
-    download_artifact_asset("JingMatrix/LSPatch", "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
+    download_artifact_asset(LSPATCH_REPOSITORY, "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
 
 
 def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):
