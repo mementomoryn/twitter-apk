@@ -1,7 +1,5 @@
 APKMIRROR_URL: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
 
-APKMIRROR_CLOUDFLARE: bool = False
-
 REVANCED_PATCH_REPOSITORY: str = "crimera/piko"
 
 REVANCED_INTEGRATION_REPOSITORY: str = "crimera/revanced-integrations"
