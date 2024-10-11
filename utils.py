@@ -186,6 +186,8 @@ def rename_apk(
         command.append("-i")
         command.append(icon)
 
+    subprocess.run(command).check_returncode()
+
 
 def patch_revanced_apk(
     cli: str,
