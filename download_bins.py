@@ -101,6 +101,3 @@ def download_revanced_bins(repo_url: str, type: str, prerelease: bool = False):
 
 if __name__ == "__main__":
    download_apkeditor()
-   download_revanced_bins(cli_url, "cli")
-   download_revanced_bins(patch_url, "patches")
-   download_revanced_bins(integration_url, "integrations")
