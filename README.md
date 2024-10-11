@@ -1,5 +1,5 @@
 # Twitter APK
-Automated scripts to download X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori).
+Automated scripts to download X (Twitter) APK, and modified it with [Piko](https://github.com/crimera/piko) or [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori) (not tested yet).
 
 <div align="center">
 
