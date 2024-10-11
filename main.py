@@ -158,7 +158,7 @@ def main():
 
     if "xposed" in bins_list:
         download_lspatch()
-        download_xposed_bins(xposed_url, "Hachidori", prerelease_xp)
+        download_xposed_bins(xposed_url, r"^.*\d+\.apk$", prerelease_xp)
 
         xposed_version_notes: str = "**Xposed**: " + last_xposed_version.tag_name + "\n\n"
 
