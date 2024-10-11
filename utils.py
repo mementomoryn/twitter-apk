@@ -166,8 +166,7 @@ def rename_apk(
     out: str,
     name: str,
     package: str,
-    icon: str | None = None,
-    files: list | None = None
+    icon: str | None = None
 ):
     command = [
         "java",
@@ -186,9 +185,6 @@ def rename_apk(
     if icon is not None:
         command.append("-i")
         command.append(icon)
-
-    if files is not None:
-        files.append(out)
 
 
 def patch_revanced_apk(
