@@ -280,7 +280,7 @@ def patch_xposed_apk(
         "--embed",
         xposed,
         "--keystore",
-        "keystores/lspatch.bks",
+        "keystores/lspatch.p12",
         keystore_password,
         keystore_alias,
         keystore_password,
