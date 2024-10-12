@@ -1,5 +1,6 @@
 import requests
 import re
+import shutil
 from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY, APKRENAMER_REPOSITORY
 from constants import HEADERS
 from utils import panic, extract_archive, download
@@ -67,6 +68,7 @@ def download_apkrenamer():
     print("Downloading apkrenamer")
     download_release_asset(APKRENAMER_REPOSITORY, "ApkRenamer", False, "bins", "apkrenamer.zip")
     extract_archive("bins/apkrenamer.zip", "bins/apkrenamer", "", "", True, "bins", "ApkRenamer")
+    shutil.move("bins/apkrenamer/bin", "bin")
 
 
 def download_lspatch():
