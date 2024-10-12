@@ -146,10 +146,10 @@ def main():
         revanced_version_notes: str = "**Patches**: " + last_patch_version.tag_name + "\n\n**Integrations**: " + last_integration_version.tag_name + "\n\n"
 
         if last_patch_version.body != "":
-            patch_changelog_notes: str = "\n\n## Patches\n" + format_changelog(last_patch_version.body, True)
+            patch_changelog_notes: str = "\n\n## Patches\n" + format_changelog(last_patch_version.body)
 
         if last_patch_version.body != "":
-            integration_changelog_notes: str = "\n## Integrations\n" + format_changelog(last_integration_version.body, True)
+            integration_changelog_notes: str = "\n## Integrations\n" + format_changelog(last_integration_version.body)
 
         revanced_changelog_notes: str = patch_changelog_notes + integration_changelog_notes
     else:
@@ -163,7 +163,7 @@ def main():
         xposed_version_notes: str = "**Xposed**: " + last_xposed_version.tag_name + "\n\n"
 
         if last_xposed_version.body != "":
-            xposed_changelog_notes: str = "\n## Xposed\n" + format_changelog(last_xposed_version.body, False)
+            xposed_changelog_notes: str = "\n## Xposed\n" + format_changelog(last_xposed_version.body)
     else:
         xposed_version_notes: str = ""
         xposed_changelog_notes: str = ""

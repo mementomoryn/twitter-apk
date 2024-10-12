@@ -40,13 +40,14 @@ def previous_version(index: int, changelog: str) -> str:
     return version
 
 
-def format_changelog(changelog: str, sections: str) -> str:
-    if sections is False:
-        replace: str = changelog.replace("# ", "### ")
-        loglist: str = "\r\n\r\n".join(replace.split("\r\n\r\n")[:-3]).split("### ")[1:]
+def format_changelog(changelog: str) -> str:
+    replaces: str = re.sub(r"(?m)^#{1}\s", "### ",changelog.replace("\r\n\r\nONLY support ROOTED Android device with LSPosed v1.9.2 (7024) and above\r\n\r\nLong press X icon on top of the home screen or tap version in about section to access settings.\r\n\r\nPlease DO NOT tweet/post anything about this module at Twitter/X.", ""))
+    if replaces.find("#") == -1:
+        loglist: str = replaces.split("### ")
+        append: str = ["" + log for log in loglist]
     else:
-        loglist: str = changelog.split("### ")[1:]
-    append: str = ["### " + log for log in loglist]
+        loglist: str = replaces.split("### ")[1:]
+        append: str = ["### " + log for log in loglist]
     join: str = ''.join(append)
 
     return join
