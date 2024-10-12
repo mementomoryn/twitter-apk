@@ -84,7 +84,7 @@ Integrations -> {integration_url}@{previous_version(1, release)}
 """
     elif xposed is True:
         versions: str = f"""
-Xposed -> {xposed_url}@{previous_version(2, release)}
+Xposed -> {xposed_url}@{previous_version(0, release)}
 """
 
     message = f"""
