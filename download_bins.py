@@ -1,6 +1,5 @@
 import requests
 import re
-import shutil
 from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
