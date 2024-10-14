@@ -1,5 +1,5 @@
 from apkmirror import Version
-from utils import move_merged_apk, rename_apk, patch_revanced_apk, patch_xposed_apk
+from utils import move_merged_apk, patch_revanced_apk, patch_xposed_apk
 
 
 def build_apks(latest_version: Version):
@@ -10,7 +10,6 @@ def build_apks(latest_version: Version):
     cli = "bins/cli.jar"
     xposed = "bins/xposed.apk"
     lspatch = "bins/lspatch.jar"
-    apkrenamer = "bins/apkrenamer/renamer.jar"
     output_list = []
 
     patch_revanced_apk(

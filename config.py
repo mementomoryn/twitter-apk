@@ -12,6 +12,4 @@ LSPATCH_REPOSITORY: str = "JingMatrix/LSPatch"
 
 APKEDITOR_REPOSITORY: str = "REAndroid/APKEditor"
 
-APKRENAMER_REPOSITORY: str = "dvaoru/ApkRenamer"
-
 ENABLED_BINS: list = ["revanced", "xposed", "apkeditor"]

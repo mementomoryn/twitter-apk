@@ -15,4 +15,3 @@ Automated scripts to download X (Twitter) APK, and modified it with [Piko](https
 - [@JingMatrix LSPatch](https://github.com/JingMatrix/LSPatch) - Tools used to integrate Xposed into APK
 - [Hachidori](https://github.com/Xposed-Modules-Repo/com.twifucker.hachidori) - Xposed module used to build modified X (Twitter) APK
 - [@REAndroid APKEditor](https://github.com/REAndroid/APKEditor) - Tools used to merge bundled split APK
-- [@dvaoru ApkRenamer](https://github.com/dvaoru/ApkRenamer) - Tools used to rename APK

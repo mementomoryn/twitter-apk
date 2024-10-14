@@ -2,7 +2,7 @@ import requests
 import shutil
 import re
 import shutil
-from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY, APKRENAMER_REPOSITORY
+from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
 
@@ -63,15 +63,6 @@ def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, 
 def download_apkeditor():
     print("Downloading apkeditor")
     download_release_asset(APKEDITOR_REPOSITORY, "APKEditor", False, "bins", "apkeditor.jar")
-
-
-def download_apkrenamer():
-    print("Downloading apkrenamer")
-    download_release_asset(APKRENAMER_REPOSITORY, "ApkRenamer", False, "bins", "apkrenamer.zip")
-    extract_archive("bins/apkrenamer.zip", "bins/apkrenamer", "", "", True, "bins", "ApkRenamer")
-    shutil.move("bins/apkrenamer/bin", "bin")
-    shutil.move("bins/apkrenamer/keys", "keys")
-    exe_permission("bin/zipalign")
 
 
 def download_lspatch():
