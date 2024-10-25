@@ -29,7 +29,11 @@ def main():
     bins_list: list = ENABLED_BINS
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", const=None, default=None)
+    
+    def argsNotEmpty(string):
+        return None if not string else string
+    
+    parser.add_argument("-v", "--version", nargs="?", action="store", dest="version", type=argsNotEmpty, const=None, default=None)
     parser.add_argument("-p", "--prerelease", nargs="*", action="store", dest="prerelease", choices=["true", "false"], default=["false", "false", "false", "false", "false"])
     args = parser.parse_args()
 

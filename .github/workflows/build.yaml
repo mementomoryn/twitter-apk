@@ -93,7 +93,7 @@ jobs:
         run: |
           mkdir -p bins
           if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
-            python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
+            python main.py --version "${{ inputs.manual_version }}" --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
           else
             python main.py
           fi
