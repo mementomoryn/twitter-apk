@@ -2,38 +2,38 @@ name: Build Release
 
 on:
   schedule:
-    - cron: "0 20 * * *"
+    - cron: '0 20 * * *'
   workflow_dispatch:
-      inputs:
-        prerelease_cli:
-          description: "Include Pre-release CLI"
-          required: false
-          type: boolean
-          default: false
-        prerelease_patch:
-          description: "Include Pre-release Patches"
-          required: false
-          type: boolean
-          default: false
-        prerelease_int:
-          description: "Include Pre-release Integrations"
-          required: false
-          type: boolean
-          default: false
-        prerelease_xposed:
-          description: "Include Pre-release Xposed"
-          required: false
-          type: boolean
-          default: false
-        prerelease_apk:
-          description: "Include Pre-release APKs"
-          required: false
-          type: boolean
-          default: false
-        manual_version:
-          description: "APK Version Number (empty for auto)"
-          required: false
-          type: string
+    inputs:
+      prerelease_cli:
+        description: 'Include Pre-release CLI'
+        required: false
+        type: boolean
+        default: false
+      prerelease_patch:
+        description: 'Include Pre-release Patches'
+        required: false
+        type: boolean
+        default: false
+      prerelease_int:
+        description: 'Include Pre-release Integrations'
+        required: false
+        type: boolean
+        default: false
+      prerelease_xposed:
+        description: 'Include Pre-release Xposed'
+        required: false
+        type: boolean
+        default: false
+      prerelease_apk:
+        description: 'Include Pre-release APKs'
+        required: false
+        type: boolean
+        default: false
+      manual_version:
+        description: 'APK Version Number (empty for auto)'
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -42,58 +42,58 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu' # See 'Supported distributions' for available options
-        java-version: '21'
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12.4"
-    - name: Install python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Version increment
-      id: release_version
-      uses: reecetech/version-increment@main
-      with:
-        scheme: calver
-    - name: Pre-release version
-      id: pre-release
-      run: |
-        release_version=${{ steps.release_version.outputs.v-version }}
-        git_sha_short=$(git rev-parse --short HEAD | sed 's/0*//')
-        if [[ $release_version != *-pre* ]]; then
-          echo "version=$release_version-pre.$git_sha_short" >> $GITHUB_OUTPUT
-        else
-          echo "version=$release_version" >> $GITHUB_OUTPUT
-        fi
-    - name: Assign github token authorization  
-      uses: cschleiden/replace-tokens@master
-      with:
-        tokenPrefix: '${'
-        tokenSuffix: '}'
-        files: '["constants.py"]'
-      env :
+      - uses: actions/checkout@v4
+      - name: Set up java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '21'
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.12.4'
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Version increment
+        id: release_version
+        uses: reecetech/version-increment@main
+        with:
+          scheme: calver
+      - name: Pre-release version
+        id: pre-release
+        run: |
+          release_version=${{ steps.release_version.outputs.v-version }}
+          git_sha_short=$(git rev-parse --short HEAD | sed 's/0*//')
+          if [[ $release_version != *-pre* ]]; then
+            echo "version=$release_version-pre.$git_sha_short" >> $GITHUB_OUTPUT
+          else
+            echo "version=$release_version" >> $GITHUB_OUTPUT
+          fi
+      - name: Assign github token authorization
+        uses: cschleiden/replace-tokens@master
+        with:
+          tokenPrefix: '${'
+          tokenSuffix: '}'
+          files: '["constants.py"]'
+        env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-    - name: Try building
-      env: 
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        TG_TOKEN: ${{ secrets.TG_TOKEN }}
-        TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-        TG_THREAD_ID: ${{ secrets.TG_THREAD_ID }}
-        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-        RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
-        PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
-        CURRENT_REPOSITORY: ${{ github.repository }}
-      run: |
-        mkdir -p bins
-        if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
-          python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
-        else
-          python main.py
-        fi
+      - name: Try building
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_THREAD_ID: ${{ secrets.TG_THREAD_ID }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
+          PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
+          CURRENT_REPOSITORY: ${{ github.repository }}
+        run: |
+          mkdir -p bins
+          if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
+            python main.py --version ${{ inputs.manual_version }} --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
+          else
+            python main.py
+          fi
