@@ -4,7 +4,7 @@ from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
 
-def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None):
+def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None, version = None):
     url = f"https://api.github.com/repos/{repo}/releases"
 
     if prerelease is False:
@@ -18,6 +18,15 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
         release = response.json()[0]
     else:
         release = response.json()
+        
+    if not release:
+        raise Exception(f"No release found for {repo}")
+
+    if version is not None:
+        release = [i for i in release if i["tag_name"] == version]
+        if len(release) == 0:
+            raise Exception(f"No release found for version {version} on {repo}")
+
 
     link = None
     for i in release["assets"]:
