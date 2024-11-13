@@ -1,6 +1,6 @@
 import requests
 import re
-from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY
+from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY, MANIFESTEDITOR_REPOSITORY
 from config import REVANCED_PATCH_VERSION, REVANCED_INTEGRATION_VERSION, REVANCED_CLI_VERSION, XPOSED_MODULE_VERSION
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
@@ -68,6 +68,11 @@ def download_artifact_asset(repo: str, artifact_regex: str, archive_regex: str, 
         download_release_asset(repo, release_regex, False, out_dir, filename)
 
 
+def download_manifesteditor():
+    print("Downloading manifesteditor")
+    download_release_asset(MANIFESTEDITOR_REPOSITORY, "ManifestEditor", False, "bins", "manifesteditor.jar")
+    
+    
 def download_apkeditor():
     print("Downloading apkeditor")
     download_release_asset(APKEDITOR_REPOSITORY, "APKEditor", False, "bins", "apkeditor.jar")

@@ -1,7 +1,7 @@
 """
 any REPOSITORY string must contain "owner/repo"
 any VERSION string can be empty to pick latest, lspatch doesn't support picking specific version for now
-ENABLED_BINS list can contain any combination of these string: "revanced", "lspatch", "xposed", or "apkeditor"
+ENABLED_BINS list can contain any combination of these string: "revanced", "lspatch", "xposed", "apkeditor", or "manifesteditor"
 """
 
 APKMIRROR_URL: str = "https://www.apkmirror.com/apk/x-corp/twitter/"
@@ -25,5 +25,7 @@ XPOSED_MODULE_VERSION: str = ""
 LSPATCH_REPOSITORY: str = "JingMatrix/LSPatch"
 
 APKEDITOR_REPOSITORY: str = "REAndroid/APKEditor"
+
+MANIFESTEDITOR_REPOSITORY: str = "WindySha/ManifestEditor"
 
 ENABLED_BINS: list = ["revanced", "xposed", "apkeditor"]
