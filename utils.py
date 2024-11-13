@@ -276,9 +276,9 @@ def patch_xposed_apk(
 
 
 def publish_release(notes: str, prerelease: bool, files: list[str]):
-    key = os.environ.get("GH_TOKEN")
+    key = os.environ.get("GITHUB_TOKEN")
     if key is None:
-        raise Exception("GH_TOKEN is not set")
+        raise Exception("GITHUB_TOKEN is not set")
 
     release_version = os.environ["RELEASE_VERSION"]
     prerelease_version = os.environ["PRERELEASE_VERSION"]
