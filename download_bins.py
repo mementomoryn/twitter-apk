@@ -5,17 +5,23 @@ from config import REVANCED_PATCH_VERSION, REVANCED_INTEGRATION_VERSION, REVANCE
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
 
-def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None, version = None):
+def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str, filename=None, version=None):
     url = f"https://api.github.com/repos/{repo}/releases"
 
-    if prerelease is False:
+    if prerelease is False and not version:
         url += "/latest"
     
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception("Failed to fetch github")
 
-    if prerelease is True:
+    if version:
+        response = [i for i in response.json() if prerelease is False]
+        release = [i for i in response if i["tag_name"] == version][0]
+        
+        if len(release) == 0:
+            raise Exception(f"No release found for version {version} on {repo}")
+    elif prerelease is True:
         release = response.json()[0]
     else:
         release = response.json()
@@ -23,10 +29,6 @@ def download_release_asset(repo: str, regex: str, prerelease: bool, out_dir: str
     if not release:
         raise Exception(f"No release found for {repo}")
 
-    if not version or version is not None:
-        release = [i for i in release if i["tag_name"] == version]
-        if len(release) == 0:
-            raise Exception(f"No release found for version {version} on {repo}")
 
 
     link = None
