@@ -1,7 +1,7 @@
 name: Clear Workflow
 on:
   schedule:
-    - cron: '0 */48 * * *'
+    - cron: '0 16 */2 * *'
   workflow_dispatch:
 jobs:
   clear_runs:
