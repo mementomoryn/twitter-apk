@@ -1,0 +1,25 @@
+name: Clear Release
+on:
+  schedule:
+    - cron: '0 16 1 * *'
+  workflow_dispatch:
+jobs:
+  clear-tags:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Delete old releases
+        uses: sgpublic/delete-release-action@master
+        with:
+          release-drop: true
+          release-keep-count: 30
+          release-drop-tag: true
+          pre-release-drop: true
+          pre-release-keep-count: -1
+          pre-release-drop-tag: true
+          draft-drop: true
+          draft-drop-count: -1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
