@@ -78,11 +78,10 @@ jobs:
           tokenSuffix: '}'
           files: '["constants.py"]'
         env:
-          REPO_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Try building
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           TG_THREAD_ID: ${{ secrets.TG_THREAD_ID }}
