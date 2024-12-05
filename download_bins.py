@@ -80,9 +80,12 @@ def download_apkeditor():
     download_release_asset(APKEDITOR_REPOSITORY, "APKEditor", False, "bins", "apkeditor.jar")
 
 
-def download_lspatch():
+def download_lspatch(nightly: bool = False):
     print("Downloading lspatch")
-    download_artifact_asset(LSPATCH_REPOSITORY, "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
+    if nightly is False:
+        download_release_asset(LSPATCH_REPOSITORY, "lspatch.jar", False, "bins", "lspatch.jar")
+    else:
+        download_artifact_asset(LSPATCH_REPOSITORY, "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
 
 
 def download_xposed_bins(repo_url: str, regex: str, prerelease: bool = False):

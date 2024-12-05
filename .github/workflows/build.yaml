@@ -1,5 +1,4 @@
 name: Build Release
-
 on:
   schedule:
     - cron: '0 20 * * *'
@@ -22,6 +21,11 @@ on:
         default: false
       prerelease_xposed:
         description: 'Include Pre-release Xposed'
+        required: false
+        type: boolean
+        default: false
+      prerelease_lspatch:
+        description: 'Use Nightly LSPatch'
         required: false
         type: boolean
         default: false
@@ -93,7 +97,7 @@ jobs:
         run: |
           mkdir -p bins
           if [ ${{ github.event_name }} == "workflow_dispatch" ]; then
-            python main.py --version "${{ inputs.manual_version }}" --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_apk }}
+            python main.py --version "${{ inputs.manual_version }}" --prerelease ${{ inputs.prerelease_cli }} ${{ inputs.prerelease_patch }} ${{ inputs.prerelease_int }} ${{ inputs.prerelease_xposed }} ${{ inputs.prerelease_lspatch }} ${{ inputs.prerelease_apk }}
           else
             python main.py
           fi
