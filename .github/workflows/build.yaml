@@ -5,37 +5,42 @@ on:
   workflow_dispatch:
     inputs:
       prerelease_cli:
-        description: 'Include Pre-release CLI'
+        description: 'Include pre-release CLI'
         required: false
         type: boolean
         default: false
       prerelease_patch:
-        description: 'Include Pre-release Patches'
+        description: 'Include pre-release Patches'
         required: false
         type: boolean
         default: false
       prerelease_int:
-        description: 'Include Pre-release Integrations'
+        description: 'Include pre-release Integrations'
         required: false
         type: boolean
         default: false
       prerelease_xposed:
-        description: 'Include Pre-release Xposed'
+        description: 'Include pre-release Xposed'
         required: false
         type: boolean
         default: false
       prerelease_lspatch:
-        description: 'Use Nightly LSPatch'
+        description: 'Use nightly version of LSPatch'
         required: false
         type: boolean
         default: false
       prerelease_apk:
-        description: 'Include Pre-release APKs'
+        description: 'Include pre-release APKs'
+        required: false
+        type: boolean
+        default: false
+      override_stable:
+        description: 'Override release as stable'
         required: false
         type: boolean
         default: false
       manual_version:
-        description: 'APK Version Number (empty for auto)'
+        description: 'APK version code number (empty for auto)'
         required: false
         type: string
 
@@ -93,6 +98,7 @@ jobs:
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
           RELEASE_VERSION: ${{ steps.release_version.outputs.v-version }}
           PRERELEASE_VERSION: ${{ steps.pre-release.outputs.version }}
+          OVERRIDE_STABLE: ${{ inputs.override_stable }}
           CURRENT_REPOSITORY: ${{ github.repository }}
         run: |
           mkdir -p bins
