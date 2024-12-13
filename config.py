@@ -16,7 +16,7 @@ REVANCED_INTEGRATION_VERSION: str = ""
 
 REVANCED_CLI_REPOSITORY: str = "inotia00/revanced-cli"
 
-REVANCED_CLI_VERSION: str = ""
+REVANCED_CLI_VERSION: str = "v4.6.2"
 
 XPOSED_MODULE_REPOSITORY: str = "Xposed-Modules-Repo/com.twifucker.hachidori"
 
