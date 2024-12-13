@@ -176,7 +176,7 @@ def main():
 
     release_files: list = build_apks(latest_version)
 
-    release_notes: str = revanced_version_notes + xposed_version_notes + "**App**: " + latest_version.version + revanced_changelog_notes + xposed_changelog_notes
+    release_notes: str = revanced_version_notes + xposed_version_notes + "**APK**: " + latest_version.version + revanced_changelog_notes + xposed_changelog_notes
 
     publish_release(
         release_notes,
