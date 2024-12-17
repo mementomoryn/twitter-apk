@@ -40,7 +40,7 @@ def main():
     if len(args.prerelease) != 6:
         panic("Prerelease argument list is not correct")
     else:
-        if os.environ["OVERRIDE_STABLE"] is "false":
+        if os.environ["OVERRIDE_STABLE"] == "false":
             prerelease_build: bool = "true" in args.prerelease or "pre" in os.environ["RELEASE_VERSION"]
         else:
             prerelease_build: bool = False
