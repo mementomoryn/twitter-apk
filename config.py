@@ -1,6 +1,6 @@
 """
 any REPOSITORY string must contain "owner/repo"
-any VERSION string can be empty to pick latest, lspatch doesn't support picking specific version for now
+any VERSION string can be empty to pick latest
 ENABLED_BINS list can contain any combination of these string: "revanced", "lspatch", "xposed", "apkeditor", or "manifesteditor"
 """
 
@@ -23,6 +23,8 @@ XPOSED_MODULE_REPOSITORY: str = "Xposed-Modules-Repo/com.twifucker.hachidori"
 XPOSED_MODULE_VERSION: str = ""
 
 LSPATCH_REPOSITORY: str = "JingMatrix/LSPatch"
+
+LSPATCH_VERSION: str = ""
 
 APKEDITOR_REPOSITORY: str = "REAndroid/APKEditor"
 

@@ -1,7 +1,7 @@
 import requests
 import re
 from config import LSPATCH_REPOSITORY, APKEDITOR_REPOSITORY, MANIFESTEDITOR_REPOSITORY
-from config import REVANCED_PATCH_VERSION, REVANCED_INTEGRATION_VERSION, REVANCED_CLI_VERSION, XPOSED_MODULE_VERSION
+from config import REVANCED_PATCH_VERSION, REVANCED_INTEGRATION_VERSION, REVANCED_CLI_VERSION, XPOSED_MODULE_VERSION, LSPATCH_VERSION
 from constants import HEADERS
 from utils import panic, exe_permission, extract_archive, download
 
@@ -82,8 +82,8 @@ def download_apkeditor():
 
 def download_lspatch(nightly: bool = False):
     print("Downloading lspatch")
-    if nightly is False:
-        download_release_asset(LSPATCH_REPOSITORY, "lspatch.jar", False, "bins", "lspatch.jar")
+    if nightly is False or LSPATCH_VERSION:
+        download_release_asset(LSPATCH_REPOSITORY, "lspatch.jar", False, "bins", "lspatch.jar", LSPATCH_VERSION)
     else:
         download_artifact_asset(LSPATCH_REPOSITORY, "lspatch-release", r"^jar-.*.jar", "lspatch", 4, False, "bins", "lspatch-archive", "lspatch.jar", "lspatch.zip")
 
