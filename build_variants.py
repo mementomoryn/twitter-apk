@@ -21,7 +21,7 @@ def build_apks(latest_version: Version):
         includes=["Bring back twitter"],
         excludes=[],
         riparch=["armeabi-v7a", "x86", "x86_64"],
-        out=f"twitter-piko-v{version}.apk",
+        out=f"twitter-piko-v{version}-arm64-v8a.apk",
         files=output_list
     )
 
@@ -41,7 +41,7 @@ def build_apks(latest_version: Version):
         xposed,
         apk="bring-back-twitter.apk",
         out_dir="twitter-hachidori",
-        out=f"twitter-hachidori-v{version}.apk",
+        out=f"twitter-hachidori-v{version}-arm64-v8a.apk",
         files=output_list
     )
 
