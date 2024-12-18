@@ -135,16 +135,15 @@ def download(link, out, headers=None):
                 f.write(chunk)
 
 
-def run_command(command: list[str], return_log: bool):
-    cmd = subprocess.run(command, capture_output=True, shell=True, env=os.environ.copy())
+def run_command(command: list[str], output: bool):
+    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy())
 
     try:
-        if return_log is True:
-            cmd.check_returncode()
-        else:
-            cmd
-    except subprocess.CalledProcessError:
-        print(cmd.stdout)
+        cmd.check_returncode()
+    except subprocess.CompletedProcess:
+        if output is True:
+            print(cmd.stdout)
+    except subprocess.SubprocessError:
         print(cmd.stderr)
         exit(1)
 
