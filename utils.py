@@ -136,7 +136,7 @@ def download(link, out, headers=None):
 
 
 def run_command(command: list[str], return_log: bool):
-    cmd = subprocess.run(command, capture_output=True, shell=True, env=os.environ.copy())
+    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy())
 
     try:
         if return_log is True:
