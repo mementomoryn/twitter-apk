@@ -18,7 +18,7 @@ def build_apks(latest_version: Version):
         integrations,
         patches,
         apk,
-        includes=["Bring back twitter"],
+        includes=["Bring back twitter", "Enable Reader Mode"],
         excludes=[],
         riparch=["armeabi-v7a", "x86", "x86_64"],
         out=f"twitter-piko-v{version}-arm64-v8a.apk",
@@ -30,7 +30,7 @@ def build_apks(latest_version: Version):
         integrations,
         patches,
         apk,
-        includes=["Bring back twitter"],
+        includes=["Bring back twitter", "Enable Reader Mode"],
         exclusive=True,
         riparch=["armeabi-v7a", "x86", "x86_64"],
         out="bring-back-twitter.apk"
