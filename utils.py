@@ -136,7 +136,7 @@ def download(link, out, headers=None):
 
 
 def run_command(command: list[str], output: bool):
-    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy())
+    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy(), text=True)
 
     try:
         cmd.check_returncode()
