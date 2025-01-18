@@ -140,7 +140,6 @@ def run_command(command: list[str], output: bool):
 
     try:
         cmd.check_returncode()
-    except subprocess.CompletedProcess:
         if output is True:
             print(cmd.stdout)
     except subprocess.SubprocessError:
