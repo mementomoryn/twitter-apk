@@ -24,9 +24,7 @@ def build_apks(latest_version: Version):
         "Force enable translate",
     ]
 
-    common_excludes = [
-        "Enable app icons",
-    ]
+    common_excludes = []
 
     patch_apk(
         cli,
