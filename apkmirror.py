@@ -74,7 +74,7 @@ def get_manual_version(url: str, version: str) -> str | None:
     """
     app_name = list(filter(None, url.split("/")))[-1]
     if app_name == "twitter":
-        app_name = '-'.join(("x-previously", app_name))
+        app_name = '-'.join(("x-formerly", app_name))
     link = f"{url}{app_name}-{version.replace(".","-").replace(" ", "").lower()}-release"
 
     response = requests.get(link, headers=HEADERS)
