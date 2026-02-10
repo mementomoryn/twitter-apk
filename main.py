@@ -61,7 +61,7 @@ def main():
     if latest_version is None:
         raise Exception("Could not find the latest version")
 
-    if latest_version.version.lower().find("beta") != -1 or latest_version.version.lower().find("alpha") != -1 and prerelease_apk is False:
+    if not prerelease_apk and latest_version.version.lower().find("beta") != -1 or latest_version.version.lower().find("alpha") != -1:
         panic("Latest version is not a release version")
 
     last_build_version: github.GithubRelease | None = github.get_last_build_version(

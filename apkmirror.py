@@ -68,6 +68,8 @@ def get_manual_version(url: str, version: str) -> str | None:
     Get the version of the app from the given apkmirror url and manual selected version
     """
     app_name = list(filter(None, url.split("/")))[-1]
+    if app_name == "twitter":
+        app_name = "x"
     link = f"{url}{app_name}-{version.replace(".","-").replace(" ", "").lower()}-release"
 
     response = get_scraper().get(link)
