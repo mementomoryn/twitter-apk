@@ -155,10 +155,11 @@ def download(link, out, headers=None, use_scraper=False):
 
 
 def run_command(command: list[str], output: bool):
-    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy(), text=True)
+    cmd = subprocess.run(command, capture_output=True, env=os.environ.copy())
 
     try:
         cmd.check_returncode()
+    except subprocess.CompletedProcess:
         if output is True:
             print(cmd.stdout)
     except subprocess.SubprocessError:
