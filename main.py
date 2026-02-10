@@ -125,7 +125,7 @@ def main():
 
     download_link: Variant | None = None
     for variant in variants:
-        if variant.is_bundle and variant.arcithecture == "universal" or variant.arcithecture == "arm64-v8a":
+        if variant.is_bundle and variant.architecture == "universal" or variant.architecture == "arm64-v8a":
             download_link = variant
             break
 
@@ -185,7 +185,3 @@ def main():
     )
 
     report_to_telegram(patch_url, integration_url, xposed_url, prerelease_build, "revanced" in bins_list, "xposed" in bins_list)
-
-
-if __name__ == "__main__":
-    main()

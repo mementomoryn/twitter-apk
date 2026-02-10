@@ -5,8 +5,7 @@ from utils import move_merged_apk, patch_revanced_apk, patch_xposed_apk
 def build_apks(latest_version: Version):
     # patch
     apk = "big_file_merged.apk"
-    integrations = "bins/integrations.apk"
-    patches = "bins/patches.jar"
+    patches = "bins/patches.rvp"
     cli = "bins/cli.jar"
     xposed = "bins/xposed.apk"
     lspatch = "bins/lspatch.jar"
@@ -15,7 +14,6 @@ def build_apks(latest_version: Version):
 
     patch_revanced_apk(
         cli,
-        integrations,
         patches,
         apk,
         includes=["Bring back twitter"],
@@ -27,7 +25,6 @@ def build_apks(latest_version: Version):
 
     patch_revanced_apk(
         cli,
-        integrations,
         patches,
         apk,
         includes=["Bring back twitter"],
