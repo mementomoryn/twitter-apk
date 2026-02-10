@@ -97,8 +97,8 @@ def download_revanced_bins(repo_url: str, type: str, prerelease: bool = False):
     match type:
         case "cli":
             print("Downloading cli")
-            regex = r"^.*-cli-.*\.jar$"
-            output = "cli.jar"
+            regex = r"^.*-cli-.*\.jar$" if not prerelease else r"^patches-.*-.*\.rvp"
+            output = "cli.jar" if not prerelease else "patches.rvp"
             version = REVANCED_CLI_VERSION
         case "patch":
             print("Downloading patches")

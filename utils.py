@@ -188,6 +188,7 @@ def move_merged_apk(
 
 def patch_revanced_apk(
     cli: str,
+    integrations: str,
     patches: str,
     apk: str,
     includes: list[str] | None = None,
