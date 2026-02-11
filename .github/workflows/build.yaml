@@ -72,4 +72,4 @@ jobs:
           TG_THREAD_ID: ${{ secrets.TG_THREAD_ID }}
         run: |
           mkdir -p bins
-          python main.py
+          uv main.py
